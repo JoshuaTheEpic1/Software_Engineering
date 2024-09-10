@@ -34,48 +34,53 @@ void openFile(vector<string>* instruct, vector<int>* memLoc){
     }
 }
 void doInstruction(string instruct, int memLoc, int* accumulator,vector<int>* memoryLocations, int* currMemLoc){ // matches instruction to operation and calls the correct function
+    bool branched = false; // prevents an extra count to current memory location if branched is true.
     if(instruct == ("+10") || instruct == ("-10") ){   // I wanted to use a switch but that doesn't work with strings
         cout << "READ(&memoryLocations)" << endl;
     }
     else if(instruct == "+11" || instruct == "-11"){
-        cout << "WRITE(memLoc,&memoryLocations)" << endl;
+        cout << "WRITE(memLoc, const &memoryLocations)" << endl;
     }
     else if(instruct == "+20" || instruct == "-20"){
-        cout << "LOAD(&accumulator, &memoryLocations)" << endl;
+        cout << "LOAD(&accumulator, const &memoryLocations)" << endl;
     }
     else if(instruct == "+21" || instruct == "-21"){
         cout << "STORE(&accumulator, &memoryLocations)" << endl;
     }
     else if(instruct == "+30" || instruct == "-30"){
-        cout << "*accumulator = ADD(&accumulator, &memoryLocations)" << endl;
+        cout << "*accumulator = ADD(&accumulator, int memLoc, const &memoryLocations)" << endl;
     }
     else if(instruct == "+31" || instruct == "-31"){
-        cout << "*accumulator = SUBTRACT(&accumulator, &memoryLocations)" << endl;
+        cout << "*accumulator = SUBTRACT(&accumulator,int memLoc,const &memoryLocations)" << endl;
     }
     else if(instruct == "+32"  || instruct == "-33"){
-        cout << "*accumulator = DIVIDE(&accumulator, &memoryLocations)" << endl;
+        cout << "*accumulator = DIVIDE(&accumulator,int memLoc,const &memoryLocations)" << endl;
     }
     else if(instruct == "+33" || instruct == "-33"){
-        cout << "*accumulator = MULTIPLY(&accumulator, &memoryLocations)" << endl;
+        cout << "*accumulator = MULTIPLY(&accumulator,int memLoc, const &memoryLocations)" << endl;
     }
     else if(instruct == "+40" || instruct == "-40"){
         *currMemLoc = memLoc;
         cout << "branch changed to " << *currMemLoc << endl;
+        branched = true;
     }
     else if(instruct == "+41" || instruct == "-41"){
         if(*accumulator < 0){
             *currMemLoc = memLoc;
             cout << "BRANCHNEG branch changed to " << *currMemLoc << endl;
+        }else{
+             cout << "branchNEG branch didn't change " << *currMemLoc << endl;
         }
-        cout << "branchNEG branch didn't change " << *currMemLoc << endl;
+        branched = true;
     }
     else if(instruct == "+42" || instruct == "-42"){
         if(*accumulator == 0){
             *currMemLoc = memLoc;
             cout << "branchZERO branch changed to " << *currMemLoc << endl;
-        }
+        }else{
             cout << "branchZERO didn't change " << *currMemLoc << endl;
-
+        }   
+        branched = true;
         
     }
     else if(instruct == "+43" || instruct == "-43"){
@@ -84,6 +89,11 @@ void doInstruction(string instruct, int memLoc, int* accumulator,vector<int>* me
         while(userInput == ""){
             cin >> userInput;
         }
+        branched = true;
+    }
+    if(!(branched)){
+        *currMemLoc++;
+        cout << "branching is false" << endl;
     }
 }
 int main(){
@@ -97,7 +107,7 @@ int main(){
     openFile(&instructions, &memoryLocations); // asks for file name and populates the instructions vector with each line
     for(int i = 0; i < instructions.size(); i++){
         doInstruction(instructions.at(i), memoryLocations.at(i), accumptr, &memoryLocations, &currMemLoc);
-        currMemLoc++;
+        
     }
 
 }
