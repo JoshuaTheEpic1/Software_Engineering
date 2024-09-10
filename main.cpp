@@ -33,31 +33,31 @@ void openFile(vector<string>* instruct, vector<int>* memLoc){
         memLoc->push_back(stoi(outstream.str()));
     }
 }
-void doInstruction(string instruct, int memLoc, int* accumulator,vector<int>* memoryLocations, int* currMemLoc){ // matches instruction to operation and calls the correct function
+void doInstruction(string instruct, int memLoc, int* accumulator, vector<int>* memoryLocations, int* currMemLoc){ // matches instruction to operation and calls the correct function
     bool branched = false; // prevents an extra count to current memory location if branched is true.
     if(instruct == ("+10") || instruct == ("-10") ){   // I wanted to use a switch but that doesn't work with strings
-        cout << "READ(&memoryLocations)" << endl;
+        cout << "READ(memLoc,&memoryLocations)" << endl;
     }
     else if(instruct == "+11" || instruct == "-11"){
-        cout << "WRITE(memLoc, const &memoryLocations)" << endl;
+        cout << "WRITE(memoryLocations[memLoc])" << endl;
     }
     else if(instruct == "+20" || instruct == "-20"){
-        cout << "LOAD(&accumulator, const &memoryLocations)" << endl;
+        cout << "LOAD(&accumulator, memoryLocations[memLoc])" << endl;
     }
     else if(instruct == "+21" || instruct == "-21"){
-        cout << "STORE(&accumulator, &memoryLocations)" << endl;
+        cout << "STORE(memLoc, &accumulator, &memoryLocations)" << endl;
     }
     else if(instruct == "+30" || instruct == "-30"){
-        cout << "*accumulator = ADD(&accumulator, int memLoc, const &memoryLocations)" << endl;
+        cout << "*accumulator = ADD(&accumulator, memoryLocations[memLoc])" << endl;
     }
     else if(instruct == "+31" || instruct == "-31"){
-        cout << "*accumulator = SUBTRACT(&accumulator,int memLoc,const &memoryLocations)" << endl;
+        cout << "*accumulator = SUBTRACT(&accumulator, memoryLocations[memLoc])" << endl;
     }
     else if(instruct == "+32"  || instruct == "-33"){
-        cout << "*accumulator = DIVIDE(&accumulator,int memLoc,const &memoryLocations)" << endl;
+        cout << "*accumulator = DIVIDE(&accumulator, memoryLocations[memLoc])" << endl;
     }
     else if(instruct == "+33" || instruct == "-33"){
-        cout << "*accumulator = MULTIPLY(&accumulator,int memLoc, const &memoryLocations)" << endl;
+        cout << "*accumulator = MULTIPLY(&accumulator, memoryLocations[memLoc])" << endl;
     }
     else if(instruct == "+40" || instruct == "-40"){
         *currMemLoc = memLoc;
