@@ -41,22 +41,22 @@ void doInstruction(string instruct, int memLoc, int* accumulator,vector<int>* me
         cout << "WRITE(memLoc,&memoryLocations)" << endl;
     }
     else if(instruct == "+20" || instruct == "-20"){
-        cout << "LOAD(accumulator, &memoryLocations)" << endl;
+        cout << "LOAD(&accumulator, &memoryLocations)" << endl;
     }
     else if(instruct == "+21" || instruct == "-21"){
-        cout << "STORE(accumulator, &memoryLocations)" << endl;
+        cout << "STORE(&accumulator, &memoryLocations)" << endl;
     }
     else if(instruct == "+30" || instruct == "-30"){
-        cout << "*accumulator = ADD(accumulator, &memoryLocations)" << endl;
+        cout << "*accumulator = ADD(&accumulator, &memoryLocations)" << endl;
     }
     else if(instruct == "+31" || instruct == "-31"){
-        cout << "*accumulator = SUBTRACT(accumulator, &memoryLocations)" << endl;
+        cout << "*accumulator = SUBTRACT(&accumulator, &memoryLocations)" << endl;
     }
     else if(instruct == "+32"  || instruct == "-33"){
-        cout << "*accumulator = DIVIDE(accumulator, &memoryLocations)" << endl;
+        cout << "*accumulator = DIVIDE(&accumulator, &memoryLocations)" << endl;
     }
     else if(instruct == "+33" || instruct == "-33"){
-        cout << "*accumulator = MULTIPLY(accumulator, &memoryLocations)" << endl;
+        cout << "*accumulator = MULTIPLY(&accumulator, &memoryLocations)" << endl;
     }
     else if(instruct == "+40" || instruct == "-40"){
         *currMemLoc = memLoc;
