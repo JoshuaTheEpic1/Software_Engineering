@@ -1,0 +1,17 @@
+Takes a file and executes the machine language from that file.
+
+I want to add two numbers together with machine language.
+Put commands into a file so I can see the end result.
+
+Use cases:
+1. Adds 10+12 for 22.
+2. Divide 20 by 2 for 10.
+3. Saves a number in a memory location.
+4. Write a number to the screen from memory location.
+5. Subtract 10 from 35 for 25.
+5. Multiply 5 by 5 for 25.
+6. Change memory location.
+7. Change memory location if input is negative.
+8. halt the program by input.
+9. Should be able add multiple memory locations together.
+10. Should read a file I made for those instructions. 
