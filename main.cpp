@@ -6,13 +6,13 @@
 
 using namespace std;
 
-void openFile(vector<string>* instruct, vector<int>* memLoc){
+void openFile(vector<string>* instruct, vector<int>* memLocations){
     ostringstream outstream;
     string line;
     string fileName;
     cout << "Plese type the file name, including file type, where the instructions are located. " << endl;
     cin >> fileName;
-    //fileName = "Test1.txt"; // uncomment and comment above line for testing. so you don't have to type "Test1.txt everytime"
+    //fileName = "Test3.txt"; // uncomment and comment above line for testing. so you don't have to type "Test3.txt everytime"
     ifstream file(fileName);
     while(!(file.is_open())){
 
@@ -30,55 +30,55 @@ void openFile(vector<string>* instruct, vector<int>* memLoc){
         instruct->push_back(outstream.str());
         outstream.str("");
         outstream << line[3] << line[4];
-        memLoc->push_back(stoi(outstream.str()));
+        memLocations->push_back(stoi(outstream.str()));
     }
-}
-void doInstruction(string instruct, int memLoc, int* accumulator, vector<int>* memoryLocations, int* currMemLoc){ // matches instruction to operation and calls the correct function
+}                                               // accumptr is a pointer to accumulator, use *accumptr to access accumulator
+void doInstruction(string instruct,  vector<int>* mainMemory, int instructMemLoc, int* accumptr, int* currMemLoc){ // matches instruction to operation and calls the correct function
     bool branched = false; // prevents an extra count to current memory location if branched is true.
     if(instruct == ("+10") || instruct == ("-10") ){   // I wanted to use a switch but that doesn't work with strings
-        cout << "READ(memLoc,&memoryLocations)" << endl;
+        cout << "READ(instructMemLoc, mainMemory)" << endl; // provides the int of the instruction memory location and mainMemory vector
     }
     else if(instruct == "+11" || instruct == "-11"){
-        cout << "WRITE(memoryLocations[memLoc])" << endl;
+        cout << "WRITE(mainMemory->at(instructMemLoc))" << endl; // provides the int in mainMemory at the location in instruction
     }
     else if(instruct == "+20" || instruct == "-20"){
-        cout << "LOAD(&accumulator, memoryLocations[memLoc])" << endl;
+        cout << "LOAD(accumptr, mainMemory->at(instructMemLoc))" << endl;  // provides the pointer to the accumulator, and the int needed to be loaded in the accumulator
     }
     else if(instruct == "+21" || instruct == "-21"){
-        cout << "STORE(memLoc, &accumulator, &memoryLocations)" << endl;
+        cout << "STORE(instructMemLoc, accumptr, mainMemory)" << endl; // provides the int memoryLocation from instruction, the pointer to the accumulator, and the vector of the main memory
     }
     else if(instruct == "+30" || instruct == "-30"){
-        cout << "*accumulator = ADD(&accumulator, memoryLocations[memLoc])" << endl;
+        cout << "*accumptr = ADD(accumptr, mainMemory->at(instructMemLoc))" << endl; // provides the pointer to the accumulator, and the int from mainMemory location from instruction
     }
     else if(instruct == "+31" || instruct == "-31"){
-        cout << "*accumulator = SUBTRACT(&accumulator, memoryLocations[memLoc])" << endl;
+        cout << "*accumptr = SUBTRACT(accumptr, mainMemory->at(instructMemLoc))" << endl; // provides the pointer to the accumulator, and the int from mainMemory location from instruction
     }
     else if(instruct == "+32"  || instruct == "-33"){
-        cout << "*accumulator = DIVIDE(&accumulator, memoryLocations[memLoc])" << endl;
+        cout << "*accumptr = DIVIDE(accumptr, mainMemory->at(instructMemLoc))" << endl; // provides the pointer to the accumulator, and the int from mainMemory location from instruction
     }
     else if(instruct == "+33" || instruct == "-33"){
-        cout << "*accumulator = MULTIPLY(&accumulator, memoryLocations[memLoc])" << endl;
+        cout << "*accumptr = MULTIPLY(accumptr, mainMemory->at(instructMemLoc))" << endl; // provides the pointer to the accumulator, and the int from mainMemory location from instruction
     }
     else if(instruct == "+40" || instruct == "-40"){
-        *currMemLoc = memLoc;
+        *currMemLoc = instructMemLoc;
         cout << "branch changed to " << *currMemLoc << endl;
         branched = true;
     }
     else if(instruct == "+41" || instruct == "-41"){
-        if(*accumulator < 0){
-            *currMemLoc = memLoc;
-            cout << "BRANCHNEG branch changed to " << *currMemLoc << endl;
+        if(*accumptr < 0){
+            *currMemLoc = instructMemLoc;
+            cout << "BRANCHNEG: branch changed to " << *currMemLoc << endl;
         }else{
-             cout << "branchNEG branch didn't change " << *currMemLoc << endl;
+             cout << "branchNEG: branch didn't change " << *currMemLoc << endl;
         }
         branched = true;
     }
     else if(instruct == "+42" || instruct == "-42"){
-        if(*accumulator == 0){
-            *currMemLoc = memLoc;
-            cout << "branchZERO branch changed to " << *currMemLoc << endl;
+        if(*accumptr == 0){
+            *currMemLoc = instructMemLoc;
+            cout << "branchZERO: branch changed to " << *currMemLoc << endl;
         }else{
-            cout << "branchZERO didn't change " << *currMemLoc << endl;
+            cout << "branchZERO: didn't change " << *currMemLoc << endl;
         }   
         branched = true;
         
@@ -93,20 +93,19 @@ void doInstruction(string instruct, int memLoc, int* accumulator, vector<int>* m
     }
     if(!(branched)){
         *currMemLoc++;
-        cout << "branching is false" << endl;
     }
 }
 int main(){
-    vector<int> memory;
+    vector<int> Mainmemory;
     vector<string> instructions;
-    vector<int> memoryLocations;
+    vector<int> instructMemoryLocations;
     int currMemLoc = 0; // tracks location of what memory slot the program is at.
     int accumulator = 0;
     int *accumptr = &accumulator;
-    memory.resize(100); // Makes 100 memory slots.
-    openFile(&instructions, &memoryLocations); // asks for file name and populates the instructions vector with each line
+    Mainmemory.resize(100); // Makes 100 memory slots.
+    openFile(&instructions, &instructMemoryLocations); // asks for file name and populates the instructions memoryLocations vectors with each line
     for(int i = 0; i < instructions.size(); i++){
-        doInstruction(instructions.at(i), memoryLocations.at(i), accumptr, &memoryLocations, &currMemLoc);
+        doInstruction(instructions.at(i), &Mainmemory, instructMemoryLocations.at(i), accumptr,  &currMemLoc);
         
     }
 
