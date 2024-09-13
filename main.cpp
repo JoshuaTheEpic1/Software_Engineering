@@ -95,6 +95,17 @@ void doInstruction(string instruct,  vector<int>* mainMemory, int instructMemLoc
         *currMemLoc++;
     }
 }
+
+void READ(int instructMemLoc, vector<int>* mainMemory){
+    int tempWord; 
+    cin >> tempWord;
+    mainMemory[instructMemLoc] = tempWord; //places the input to the instructed memory location
+}
+
+void WRITE(int instructMemLoc, vector<int>* mainMemory){
+    cout << mainMemory[instructMemLoc]; //prints the word stored at the instructed memory location to the screen
+}
+
 int main(){
     vector<int> Mainmemory;
     vector<string> instructions;
