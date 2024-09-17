@@ -96,14 +96,22 @@ void doInstruction(string instruct,  vector<int>* mainMemory, int instructMemLoc
     }
 }
 
-void READ(int instructMemLoc, vector<int>* mainMemory){
-    int tempWord; 
+void READ(int instructMemLoc, std::vector<int>* mainMemory) {
+    int tempWord;
     cin >> tempWord;
-    mainMemory[instructMemLoc] = tempWord; //places the input to the instructed memory location
+    if (instructMemLoc >= 0 && instructMemLoc < mainMemory->size()) {
+        (*mainMemory)[instructMemLoc] = tempWord; // places the input to the instructed memory location
+    } else {
+        cerr << "Error: Memory location out of bounds." << endl;
+    }
 }
 
-void WRITE(int instructMemLoc, vector<int>* mainMemory){
-    cout << mainMemory[instructMemLoc]; //prints the word stored at the instructed memory location to the screen
+void WRITE(int instructMemLoc, std::vector<int>* mainMemory) {
+    if (instructMemLoc >= 0 && instructMemLoc < mainMemory->size()) {
+        cout << (*mainMemory)[instructMemLoc]; // prints the word stored at the instructed memory location to the screen
+    } else {
+        cerr << "Error: Memory location out of bounds." << endl;
+    }
 }
 
 int main(){
