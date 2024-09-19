@@ -53,11 +53,17 @@ void doInstruction(string instruct,  vector<int>* mainMemory, int instructMemLoc
     else if(instruct == "+31" || instruct == "-31"){
         cout << "*accumptr = SUBTRACT(accumptr, mainMemory->at(instructMemLoc))" << endl; // provides the pointer to the accumulator, and the int from mainMemory location from instruction
     }
-    else if(instruct == "+32"  || instruct == "-33"){
+    else if(instruct == "+32"  || instruct == "-32"){
         cout << "*accumptr = DIVIDE(accumptr, mainMemory->at(instructMemLoc))" << endl; // provides the pointer to the accumulator, and the int from mainMemory location from instruction
+        int divisor = mainMemory->at(instructMemLoc);
+        cout << *accumptr << " / " << divisor << endl;
+        if (divisor == 0) cout << "Divide by zero error" << endl;
+        else *accumptr = *accumptr / divisor;
     }
     else if(instruct == "+33" || instruct == "-33"){
         cout << "*accumptr = MULTIPLY(accumptr, mainMemory->at(instructMemLoc))" << endl; // provides the pointer to the accumulator, and the int from mainMemory location from instruction
+        cout << *accumptr << " * " << mainMemory->at(instructMemLoc) << endl;
+        *accumptr = *accumptr * mainMemory->at(instructMemLoc);
     }
     else if(instruct == "+40" || instruct == "-40"){
         *currMemLoc = instructMemLoc;
