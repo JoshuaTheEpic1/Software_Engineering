@@ -144,6 +144,7 @@ void workingBranchZero(){ // both insruction +42/-42 for changing memory locatio
         }
     }
 }
+
 int UNITTESTING(){
     workingLoadWord();
     oobLoadWord();
