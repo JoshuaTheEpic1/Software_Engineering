@@ -3,6 +3,8 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <stdio.h>
+#include "operations.h"
 
 using namespace std;
 
@@ -23,7 +25,7 @@ void openFile(vector<string>* instruct, vector<int>* memLocations){
         file.swap(temp);
 
     }
-    cout << " file opened" << endl;
+    cout << "file opened" << endl;
     while(getline(file, line)){
         outstream.str("");
         outstream << line[0] << line[1] << line[2];
@@ -32,20 +34,26 @@ void openFile(vector<string>* instruct, vector<int>* memLocations){
         outstream << line[3] << line[4];
         memLocations->push_back(stoi(outstream.str()));
     }
-}                                               // accumptr is a pointer to accumulator, use *accumptr to access accumulator
+}   
+
+
+
+                                            // accumptr is a pointer to accumulator, use *accumptr to access accumulator
 void doInstruction(string instruct,  vector<int>* mainMemory, int instructMemLoc, int* accumptr, int* currMemLoc){ // matches instruction to operation and calls the correct function
     bool branched = false; // prevents an extra count to current memory location if branched is true.
-    if(instruct == ("+10") || instruct == ("-10") ){   // I wanted to use a switch but that doesn't work with strings
+    if(instruct == ("+10") || instruct == ("-10") ){   // I wanted to use a switch but that doesn't work with strings (This is a tragedy -L)
         cout << "READ(instructMemLoc, mainMemory)" << endl; // provides the int of the instruction memory location and mainMemory vector
     }
     else if(instruct == "+11" || instruct == "-11"){
         cout << "WRITE(mainMemory->at(instructMemLoc))" << endl; // provides the int in mainMemory at the location in instruction
     }
     else if(instruct == "+20" || instruct == "-20"){
-        cout << "LOAD(accumptr, mainMemory->at(instructMemLoc))" << endl;  // provides the pointer to the accumulator, and the int needed to be loaded in the accumulator
+        loadWord(accumptr, mainMemory, instructMemLoc);
+        cout << *accumptr << " is now in accumulator" << endl;
     }
     else if(instruct == "+21" || instruct == "-21"){
-        cout << "STORE(instructMemLoc, accumptr, mainMemory)" << endl; // provides the int memoryLocation from instruction, the pointer to the accumulator, and the vector of the main memory
+        storeWord(accumptr, mainMemory, instructMemLoc);
+        cout << "Value at memory location " << instructMemLoc << " is now " << mainMemory->at(instructMemLoc) << endl;
     }
     else if(instruct == "+30" || instruct == "-30"){
         cout << "*accumptr = ADD(accumptr, mainMemory->at(instructMemLoc))" << endl; // provides the pointer to the accumulator, and the int from mainMemory location from instruction
@@ -95,6 +103,7 @@ void doInstruction(string instruct,  vector<int>* mainMemory, int instructMemLoc
         *currMemLoc++;
     }
 }
+
 int main(){
     vector<int> Mainmemory;
     vector<string> instructions;
@@ -109,4 +118,15 @@ int main(){
         
     }
 
+    /* Blank Space and call to run unit testing. Comment/Uncomment to test.
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << "Unit Testing Results: " << endl;
+    UNITTESTING();
+    */
+   
+    return 0;
 }
