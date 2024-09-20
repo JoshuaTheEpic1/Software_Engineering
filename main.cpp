@@ -36,16 +36,36 @@ void openFile(vector<string>* instruct, vector<int>* memLocations){
     }
 }   
 
+void READ(int instructMemLoc, std::vector<int>* mainMemory) {
+    int tempWord;
+    cin >> tempWord;
+    if (instructMemLoc >= 0 && instructMemLoc < mainMemory->size()) {
+        (*mainMemory)[instructMemLoc] = tempWord; // places the input to the instructed memory location
+    } else {
+        cerr << "Error: Memory location out of bounds." << endl;
+    }
+}
 
+void WRITE(int instructMemLoc, std::vector<int>* mainMemory) {
+    if (instructMemLoc >= 0 && instructMemLoc < mainMemory->size()) {
+        cout << (*mainMemory)[instructMemLoc]; // prints the word stored at the instructed memory location to the screen
+    } else {
+        cerr << "Error: Memory location out of bounds." << endl;
+    }
+}
 
                                             // accumptr is a pointer to accumulator, use *accumptr to access accumulator
 void doInstruction(string instruct,  vector<int>* mainMemory, int instructMemLoc, int* accumptr, int* currMemLoc){ // matches instruction to operation and calls the correct function
     bool branched = false; // prevents an extra count to current memory location if branched is true.
     if(instruct == ("+10") || instruct == ("-10") ){   // I wanted to use a switch but that doesn't work with strings (This is a tragedy -L)
-        cout << "READ(instructMemLoc, mainMemory)" << endl; // provides the int of the instruction memory location and mainMemory vector
+        cout << "calling read function changing " <<  (*mainMemory).at(instructMemLoc) << endl;
+        READ(instructMemLoc,mainMemory);
+        cout << "called read changed to " << (*mainMemory).at(instructMemLoc) << endl;
+
     }
     else if(instruct == "+11" || instruct == "-11"){
-        cout << "WRITE(mainMemory->at(instructMemLoc))" << endl; // provides the int in mainMemory at the location in instruction
+        cout << "calling read function" << endl;
+        WRITE(instructMemLoc,mainMemory);
     }
     else if(instruct == "+20" || instruct == "-20"){
         loadWord(accumptr, mainMemory, instructMemLoc);
@@ -104,8 +124,9 @@ void doInstruction(string instruct,  vector<int>* mainMemory, int instructMemLoc
     }
 }
 
+
 int main(){
-    /*vector<int> mainMemory;
+    vector<int> mainMemory;
     vector<string> instructions;
     vector<int> instructMemoryLocations;
     int currMemLoc = 0; // tracks location of what memory slot the program is at.
@@ -118,7 +139,7 @@ int main(){
         
     }
 
-    Blank Space and call to run unit testing. Comment/Uncomment to test.*/
+    /*Blank Space and call to run unit testing. Comment/Uncomment to test.
     cout << endl;
     cout << endl;
     cout << endl;
@@ -126,7 +147,7 @@ int main(){
     cout << endl;
     cout << "Unit Testing Results: " << endl;
     UNITTESTING();
-    
+    */
    
     return 0;
 }
