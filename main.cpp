@@ -20,7 +20,7 @@ void openFile(vector<string>* instruct, vector<int>* memLocations){
 
         cout << "Invalid file name please reenter the name, including file type." << endl;
         cin >> fileName;
-        cout << "file name is " + fileName << endl;
+        cout << "file name is " << fileName << endl;
         ifstream temp(fileName);
         file.swap(temp);
 
@@ -105,20 +105,20 @@ void doInstruction(string instruct,  vector<int>* mainMemory, int instructMemLoc
 }
 
 int main(){
-    vector<int> Mainmemory;
+    /*vector<int> mainMemory;
     vector<string> instructions;
     vector<int> instructMemoryLocations;
     int currMemLoc = 0; // tracks location of what memory slot the program is at.
     int accumulator = 0;
     int *accumptr = &accumulator;
-    Mainmemory.resize(100); // Makes 100 memory slots.
+    mainMemory.resize(100); // Makes 100 memory slots.
     openFile(&instructions, &instructMemoryLocations); // asks for file name and populates the instructions memoryLocations vectors with each line
     for(int i = 0; i < instructions.size(); i++){
-        doInstruction(instructions.at(i), &Mainmemory, instructMemoryLocations.at(i), accumptr,  &currMemLoc);
+        doInstruction(instructions.at(i), &mainMemory, instructMemoryLocations.at(i), accumptr,  &currMemLoc);
         
     }
 
-    /* Blank Space and call to run unit testing. Comment/Uncomment to test.
+    Blank Space and call to run unit testing. Comment/Uncomment to test.*/
     cout << endl;
     cout << endl;
     cout << endl;
@@ -126,7 +126,7 @@ int main(){
     cout << endl;
     cout << "Unit Testing Results: " << endl;
     UNITTESTING();
-    */
+    
    
     return 0;
 }
