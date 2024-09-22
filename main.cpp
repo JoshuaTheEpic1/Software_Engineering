@@ -101,19 +101,20 @@ void doInstruction(string instruct,  vector<int>* mainMemory, int instructMemLoc
         if(*accumptr < 0){
             *currMemLoc = instructMemLoc;
             cout << "BRANCHNEG: branch changed to " << *currMemLoc << endl;
+            branched = true;
         }else{
              cout << "branchNEG: branch didn't change " << *currMemLoc << endl;
         }
-        branched = true;
     }
     else if(instruct == "+42" || instruct == "-42"){
         if(*accumptr == 0){
             *currMemLoc = instructMemLoc;
             cout << "branchZERO: branch changed to " << *currMemLoc << endl;
+            branched = true;
         }else{
             cout << "branchZERO: didn't change " << *currMemLoc << endl;
         }   
-        branched = true;
+
         
     }
     else if(instruct == "+43" || instruct == "-43"){
@@ -122,7 +123,6 @@ void doInstruction(string instruct,  vector<int>* mainMemory, int instructMemLoc
         while(userInput == ""){
             cin >> userInput;
         }
-        branched = true;
     }
     if(!(branched)){
         *currMemLoc++;
