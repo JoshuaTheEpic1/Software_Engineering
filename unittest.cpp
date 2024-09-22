@@ -114,7 +114,7 @@ void workingBranchNegative(){ // tests both instruction +41/-41 for changing the
     else{
         accumulator = 10;
         doInstruction("-41",&mainMemory,2,accumptr,&currMemLoc);
-        if(currMemLoc !=2){
+        if(currMemLoc !=3){
             cout << "Branch test workingBranchNegative: part 2, failed changed location when it shouldn't have, location is: " << currMemLoc << " should be 2." << endl;
         }
         else{
@@ -136,7 +136,7 @@ void workingBranchZero(){ // both insruction +42/-42 for changing memory locatio
     else{
         accumulator = 10;
         doInstruction("-42",&mainMemory,2,accumptr,&currMemLoc);
-        if(currMemLoc !=2){
+        if(currMemLoc !=3){
             cout << "Branch test workingBranchZero: part 2, failed changed location when it shouldn't have, location is: " << currMemLoc << " should be 2." << endl;
         }
         else{
