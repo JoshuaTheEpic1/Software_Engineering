@@ -133,7 +133,7 @@ User inputs the instruction "+3310" or "-3310" the program should multiply the w
 4.5.3   Functional Requirements
 Be able to do basic arithmetic correctly.
 
-### 4.4 Control operations.
+### 4.5 Control operations.
 4.5.1   Description and Priority
 Should be able to branch to a different memory location if instructions call for it, can branch no matter what, branch if the accumulator is negative, or branch if the accumulator is zero. low priority.<br />
 4.5.2   Stimulus/Response Sequences
