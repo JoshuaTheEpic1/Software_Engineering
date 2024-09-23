@@ -66,7 +66,7 @@ The teachers will use the software for teaching students how to use nad understa
 ### 2.1 Product Perspective
 This is a new self contained product. Developed as a group project for CS2450 UVU.
 ### 2.2 Product Functions
-  *Add two numbers. 
+  *Add two numbers. <br />
   *subtract two numbers.<br />
   *Multiply two numbers.<br />
   *Divide two numbers.<br />
@@ -75,13 +75,25 @@ This is a new self contained product. Developed as a group project for CS2450 UV
 ### 2.3 User Classes and Characteristics
   *College professors. High knowledge, lots of experience.<br />
   *College students. Most likely the first time they have ever done anything with machine language.<br />
-### 2.4 Operating Environment
+### 2.4 Use cases
+ 1. Adds 10+12 for 22.
+ 2. Divide 20 by 2 for 10.
+ 3. Saves a number in a memory location.
+ 4. Write a number to the screen from memory location.
+ 5. Subtract 10 from 35 for 25.
+ 6. Multiply 5 by 5 for 25.
+ 7. Change memory location.
+ 8. Change memory location if input is negative.
+ 9. halt the program by input.
+ 10. Should be able add multiple memory locations together.
+ 11. Should read a file I made for those instructions.
+### 2.5 Operating Environment
 Windows
-### 2.5 Design and Implementation Constraints
+### 2.6 Design and Implementation Constraints
 Milestones have to be finished my specific dates.
-### 2.6 User Documentation
+### 2.7 User Documentation
 
-### 2.7 Assumptions and Dependencies
+### 2.8 Assumptions and Dependencies
 
 ## External Interface Requirements
 ### 3.1 User Interfaces
