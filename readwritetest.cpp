@@ -26,14 +26,14 @@ void READ(int instructmemloc, vector<int>* mainmemory) {
     if (instructmemloc >= 0 && instructmemloc < mainmemory->size()) {
         if (!cin) {
             cerr << "error: invalid input. Expected an integer.\n";
-            //cout << "error: invalid input. Expected an integer.\n";
+            cout << "error: invalid input. Expected an integer.\n";
 
         }
         (*mainmemory)[instructmemloc] = tempword;
     }
     else {
         cerr << "error: memory location out of bounds.\n";
-        //cout << "error: memory location out of bounds.\n";
+        cout << "error: memory location out of bounds.\n";
     }
 }
 
@@ -44,7 +44,7 @@ void WRITE(int instructmemloc, vector<int>* mainmemory) {
     }
     else {
         cerr << "error: memory location out of bounds.\n";
-        //cout << "error: memory location out of bounds.\n";
+        cout << "error: memory location out of bounds.\n";
     }
 }
 
