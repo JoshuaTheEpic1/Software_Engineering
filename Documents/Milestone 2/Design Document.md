@@ -60,7 +60,7 @@ This software is intended to be used for computer science teachers and computer 
 ### 1.4 Product Scope
 The teachers will use the software for teaching students how to use nad understand machien language. Students will use the software to type out programs.
 ### 1.5 References
-[IEEE-SRS-Template](https://github.com/rick4470/IEEE-SRS-Tempate?tab=readme-ov-file#revision-history) by Rick
+[IEEE-SRS-Template](https://github.com/rick4470/IEEE-SRS-Tempate?tab=readme-ov-file#revision-history) by Rick<br />
 [Software requirement specification (SRS) document template](https://assets.asana.biz/m/6ac2683dd6006280/original/software-requirement-document-template.pdf) unkown author
 ## Overall Description
 ### 2.1 Product Perspective
