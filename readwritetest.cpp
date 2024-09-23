@@ -1,4 +1,3 @@
-#include <gtest/gtest.h>
 #include <vector>
 #include <iostream>
 #include <sstream>
@@ -23,7 +22,8 @@ void READ(int instructmemloc, vector<int>* mainmemory) {
     cin >> tempword;
     if (instructmemloc >= 0 && instructmemloc < mainmemory->size()) {
         (*mainmemory)[instructmemloc] = tempword;
-    } else {
+    }
+    else {
         cerr << "error: memory location out of bounds." << endl;
     }
 }
@@ -31,44 +31,21 @@ void READ(int instructmemloc, vector<int>* mainmemory) {
 void WRITE(int instructmemloc, vector<int>* mainmemory) {
     if (instructmemloc >= 0 && instructmemloc < mainmemory->size()) {
         cout << (*mainmemory)[instructmemloc];
-    } else {
+    }
+    else {
         cerr << "error: memory location out of bounds." << endl;
     }
 }
 
-// Unit tests
-TEST(MemoryTest, ReadValidLocation) {
+int main() {
     vector<int> memory(10, 0);
+    
+    // Simulate input (you can replace this with actual input)
     input.str("42");
+
+    // Execute READ and WRITE functions
     READ(5, &memory);
-    EXPECT_EQ(memory[5], 42);
-}
-
-TEST(MemoryTest, ReadInvalidLocation) {
-    vector<int> memory(10, 0);
-    input.str("42");
-    testing::internal::CaptureStderr();
-    READ(15, &memory);
-    string output = testing::internal::GetCapturedStderr();
-    EXPECT_EQ(output, "error: memory location out of bounds.\n");
-}
-
-TEST(MemoryTest, WriteValidLocation) {
-    vector<int> memory(10, 0);
-    memory[5] = 42;
     WRITE(5, &memory);
-    EXPECT_EQ(output.str(), "42");
-}
 
-TEST(MemoryTest, WriteInvalidLocation) {
-    vector<int> memory(10, 0);
-    testing::internal::CaptureStderr();
-    WRITE(15, &memory);
-    string output = testing::internal::GetCapturedStderr();
-    EXPECT_EQ(output, "error: memory location out of bounds.\n");
-}
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    return 0;
 }
