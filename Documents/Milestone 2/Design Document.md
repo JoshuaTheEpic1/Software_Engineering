@@ -68,21 +68,14 @@ The teachers will use the software for teaching students how to use nad understa
 This is a new self contained product. Developed as a group project for CS2450 UVU.
 ### 2.2 Product Functions
   *Add two numbers. 
-  *subtract two numbers.
-  *Multiply two numbers.
-  *Divide two numbers.
-  *Output words.
-  *Input words.
+  *subtract two numbers.<br />
+  *Multiply two numbers.<br />
+  *Divide two numbers.<br />
+  *Output words.<br />
+  *Input words.<br />
 ### 2.3 User Classes and Characteristics
-  *User wants to add  two numbers.
-  *User wants to divide two numbers.
-  *User wants to subtract  two numbers.
-  *User wants to Multiply two numbers.
-  *User wants to store a number in a memory location.
-  *User wants to see a number stored in a memory location.
-  *User wants to pause the running program.
-  *User should be able to input a file that the program follows.
-  *User should be able to change the memory location based on results.
+  *College professors. High knowledge, lots of experience.<br />
+  *College students. Most likely the first time they have ever done anything with machine language.<br />
 ### 2.4 Operating Environment
 Windows
 ### 2.5 Design and Implementation Constraints
@@ -102,55 +95,55 @@ For the prototype instructions are put into a file and the file is read line by 
 
 ## System Features
 ### 4.1 Read a text file.
-4.1.1   Description and Priority
-Reads and parses a text file for instructions that need to be run. High priority.
-4.1.2   Stimulus/Response Sequences
-User provides the name of the textfile that needs to be read.
-4.1.3   Functional Requirements
-Opens a text file by name provided in the command line by the user. If the file can't be opened the program asks again until a file can be opened.
-Parses that text file and loads the instructions into two vectors. One holding the instruction and one holding the memory location.
+4.1.1   Description and Priority<br />
+Reads and parses a text file for instructions that need to be run. High priority.<br />
+4.1.2   Stimulus/Response Sequences<br />
+User provides the name of the textfile that needs to be read.<br />
+4.1.3   Functional Requirements<br />
+Opens a text file by name provided in the command line by the user. If the file can't be opened the program asks again until a file can be opened.<br />
+Parses that text file and loads the instructions into two vectors. One holding the instruction and one holding the memory location.<br />
 
 
 ### 4.2 I/O operations.
-4.2.1   Description and Priority
-Should be able to take a word from keyboard and input into memory. Or display a word to the screen from memory. Medium priority
-4.2.2   Stimulus/Response Sequences
-User inputs the instruction +1010 or -1010 and the program should ask for a input and save it to memory 10.
-User inputs the instruction +1110 or -1110 and the program should display the word in memory 10.
-4.2.3   Functional Requirements
-Be able to save information and be able to read saved information.
+4.2.1   Description and Priority<br />
+Should be able to take a word from keyboard and input into memory. Or display a word to the screen from memory. Medium priority<br />
+4.2.2   Stimulus/Response Sequences<br />
+User inputs the instruction +1010 or -1010 and the program should ask for a input and save it to memory 10.<br />
+User inputs the instruction +1110 or -1110 and the program should display the word in memory 10.<br />
+4.2.3   Functional Requirements<br />
+Be able to save information and be able to read saved information.<br />
 
 ### 4.3 Load/store operations.
-4.3.1   Description and Priority
-Should be able to load a word from memory location into a variable or store a variable into a memory slot.
-4.3.2   Stimulus/Response Sequences
-User inputs the instruction +2110 or -2010 and the program should put the word from memory 10 into the accumlator.
-User inputs the instruction +2110 or -2110 and the program should save the word from the accumulator into memory 10.
-4.3.3   Functional Requirements
-Be able to do basic arithmetic correctly.
+4.3.1   Description and Priority<br />
+Should be able to load a word from memory location into a variable or store a variable into a memory slot.<br />
+4.3.2   Stimulus/Response Sequences<br />
+User inputs the instruction +2110 or -2010 and the program should put the word from memory 10 into the accumlator.<br />
+User inputs the instruction +2110 or -2110 and the program should save the word from the accumulator into memory 10.<br />
+4.3.3   Functional Requirements<br />
+Be able to do basic arithmetic correctly.<br />
 
 ### 4.4 Arithmetic operations.
-4.4.1   Description and Priority
-Should be able to do simple arithmetic if instructions call for it. Medium priority.
-4.4.2   Stimulus/Response Sequences
-User inputs the instruction "+3010" or "-3010" the program should add the word from memory stored in memory 10 and add it to the accumulator. Leaving the result in the accumulator.
-User inputs the instruction "+3110" or "-3110" the program should subtract the word from memory stored in memory 10 and add it to the accumulator. Leaving the result in the accumulator.
-User inputs the instruction "+3210" or "-3210" the program should divide the word from memory stored in memory 10 and add it to the accumulator. Leaving the result in the accumulator.
-User inputs the instruction "+3310" or "-3310" the program should multiply the word from memory stored in memory 10 and add it to the accumulator. Leaving the result in the accumulator.
+4.4.1   Description and Priority<br />
+Should be able to do simple arithmetic if instructions call for it. Medium priority.<br />
+4.4.2   Stimulus/Response Sequences<br />
+User inputs the instruction "+3010" or "-3010" the program should add the word from memory stored in memory 10 and add it to the accumulator. Leaving the result in the accumulator.<br />
+User inputs the instruction "+3110" or "-3110" the program should subtract the word from memory stored in memory 10 and add it to the accumulator. Leaving the result in the <br />accumulator.<br />
+User inputs the instruction "+3210" or "-3210" the program should divide the word from memory stored in memory 10 and add it to the accumulator. Leaving the result in the accumulator.<br />
+User inputs the instruction "+3310" or "-3310" the program should multiply the word from memory stored in memory 10 and add it to the accumulator. Leaving the result in the <br />accumulator.
 4.5.3   Functional Requirements
 Be able to do basic arithmetic correctly.
 
 ### 4.4 Control operations.
 4.5.1   Description and Priority
-Should be able to branch to a different memory location if instructions call for it, can branch no matter what, branch if the accumulator is negative, or branch if the accumulator is zero. low priority.
+Should be able to branch to a different memory location if instructions call for it, can branch no matter what, branch if the accumulator is negative, or branch if the accumulator is zero. low priority.<br />
 4.5.2   Stimulus/Response Sequences
-User inputs the instruction "+4010" or "-4010" the program then branches to the memory location 10.
-User inputs the instruction "+4110" or "-4110" the program branches to the memory location only if the accumulator is negative.
-User inputs the instruction "+4210" or "-4210" the program branaches to the memory location only if the accumulator is zero.
-User inputs the instruction "+4310" or "-4310" the program pauses executing the instructions.
-4.5.3   Functional Requirements
-The program should have a variable to know where it is in memory and then be able to change that.
-The program should be able to pause waiting for some input to unpause.
+User inputs the instruction "+4010" or "-4010" the program then branches to the memory location 10.<br />
+User inputs the instruction "+4110" or "-4110" the program branches to the memory location only if the accumulator is negative.<br />
+User inputs the instruction "+4210" or "-4210" the program branaches to the memory location only if the accumulator is zero.<br />
+User inputs the instruction "+4310" or "-4310" the program pauses executing the instructions.<br />
+4.5.3   Functional Requirements<br />
+The program should have a variable to know where it is in memory and then be able to change that.<br />
+The program should be able to pause waiting for some input to unpause.<br />
 
 ## Other Nonfunctional Requirements
 ### 5.1 Performance Requirements
@@ -171,4 +164,4 @@ List any operating principles about the product, such as which individuals or ro
 ### Appendix B: Analysis Models
 
 ### Appendix C: To Be Determined List
-Collect a numbered list of the TBD (to be determined) references that remain in the SRS so they can be tracked to closure.
+
