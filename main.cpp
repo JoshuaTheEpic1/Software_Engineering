@@ -36,21 +36,29 @@ void openFile(vector<string>* instruct, vector<int>* memLocations){
     }
 }   
 
-void READ(int instructMemLoc, std::vector<int>* mainMemory) {
-    int tempWord;
-    cin >> tempWord;
-    if (instructMemLoc >= 0 && instructMemLoc < mainMemory->size()) {
-        (*mainMemory)[instructMemLoc] = tempWord; // places the input to the instructed memory location
-    } else {
-        cerr << "Error: Memory location out of bounds." << endl;
+//Can probably put these two into a separate file and link it here, but idk how
+void READ(int instructMemLoc, vector<int>* mainMemory) {
+    int tempword; //assumes all words are ints. Alteration is needed to store more dynamic data.
+    cin >> tempword;
+    if (instructMemLoc >= 0 && instructMemLoc < mainMemory->size()) { //checks if memory location is in bounds
+        ///*
+        if (!cin) { //Makes sure the inputted word is an int. We may need to change or remove if wanting to store non-int values
+            cout << "error: invalid input. Expected an integer.\n";
+        }
+        //*/
+        (*mainMemory)[instructMemLoc] = tempword;
+    }
+    else {
+        cout << "error: memory location out of bounds.\n";
     }
 }
 
-void WRITE(int instructMemLoc, std::vector<int>* mainMemory) {
-    if (instructMemLoc >= 0 && instructMemLoc < mainMemory->size()) {
-        cout << (*mainMemory)[instructMemLoc]; // prints the word stored at the instructed memory location to the screen
-    } else {
-        cerr << "Error: Memory location out of bounds." << endl;
+void WRITE(int instructMemLoc, vector<int>* mainMemory) {
+    if (instructMemLoc >= 0 && instructMemLoc < mainMemory->size()) { //checks if memory location is in bounds
+        cout << (*mainMemory)[instructMemLoc];
+    }
+    else {
+        cout << "error: memory location out of bounds.\n";
     }
 }
 
