@@ -1,8 +1,8 @@
 # Software Requirements Specification
 ## For  Software Engineering CS2450
-Version 1.0 approved
-Prepared by Parker Reid
-Group 4
+Version 1.0 approved<br />
+Prepared by Parker Reid<br />
+Group 4<br />
 9/23/2024
 
 Table of Contents
