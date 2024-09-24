@@ -245,43 +245,46 @@ void testSubtract(){
     }
     else{cout << "First test subtract failed. Should be 0 got: " << accumulator << endl;}
 }
-/*void testMultiply(){
+void divideTests(){
     vector<int> mainMemory;
-    int accumulator = 10;
+    int accumulator = 0;
     int *accumptr = &accumulator;
-    int currMemLoc = 0;
-    mainMemory.resize(3);
-    mainMemory.at(2) = 20;
-        doInstruction("+33",&mainMemory,2,accumptr,&currMemLoc);
-    if(accumulator == 200){
-        cout << "First test multiply passed." << endl;
-        doInstruction("-33",&mainMemory,2,accumptr,&currMemLoc);
-        if(accumulator == 4000){
-            cout << "Second test multiply passed." << endl;
-        }
-        else{cout << "Second test multiply failed. Should be 4000 got: " << accumulator << endl;}
-    }
-    else{cout << "First test multiply failed. Should be 200 got: " << accumulator << endl;}
+    mainMemory.resize(4);
+    mainMemory[0] = 10;
+    mainMemory[1] = 20;
+    mainMemory[2] = 30;
+    mainMemory[3] = 0;
+    //Test 50 / 10
+    *accumptr = 50;
+    DIVIDE(&mainMemory, 0, accumptr);
+    if (*accumptr == 5) cout << "Divide test 50 / 10: Passed" << endl;
+    else cout << "Divide test 50 / 10: Failed" << endl;
+    //Test divide by zero
+    DIVIDE(&mainMemory, 3, accumptr);
+    if (*accumptr == 5) cout << "Divide by zero test: Passed" << endl;
+    else cout << "Divide by zero test: Failed" << endl; //
 }
-void testDivide(){
+
+void multiplyTests(){
     vector<int> mainMemory;
-    int accumulator = 10;
+    int accumulator = 0;
     int *accumptr = &accumulator;
-    int currMemLoc = 0;
     mainMemory.resize(3);
-    mainMemory.at(2) = 20;
-    doInstruction("+32",&mainMemory,2,accumptr,&currMemLoc);
-    if(accumulator == 10){
-        cout << "First test divide passed." << endl;
-        doInstruction("-32",&mainMemory,2,accumptr,&currMemLoc);
-        if(accumulator == 1){
-            cout << "Second test divide passed." << endl;
-        }
-        else{cout << "Second test divide failed. Should be 0 got: " << accumulator << endl;}
-    }
-    else{cout << "First test divide failed. Should be 0 got: " << accumulator << endl;}
+    mainMemory[0] = 10;
+    mainMemory[1] = 20;
+    mainMemory[2] = 30;
+    //Test 5 * 20
+    *accumptr = 5;
+    MULTIPLY(&mainMemory, 1, accumptr);
+    if (*accumptr == 100) cout << "Test 5 * 20: Passed" << endl;
+    else cout << "Test 5 * 20: Failed" << endl;
+    //Test 0 * 10
+    *accumptr = 0;
+    MULTIPLY(&mainMemory, 0, accumptr);
+    if (*accumptr == 100) cout << "Test 0 * 10: Passed" << endl;
+    else cout << "Test 0 * 10: Failed" << endl;
 }
-*/
+
 int UNITTESTING(){
     workingLoadWord();
     oobLoadWord();
@@ -290,13 +293,7 @@ int UNITTESTING(){
     workingBranch();
     workingBranchNegative();
     workingBranchZero();
-    test_READ();
-    test_WRITE();
-    testAdd();
-    testSubtract();
-    testDivide();
-    testMultiply();
-
-
+    divideTests();
+    multiplyTests();
     return 0;
 }

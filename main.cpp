@@ -75,6 +75,18 @@ int WRITE(int instructMemLoc, vector<int>* mainMemory) {
     return -1;
 }
 
+void DIVIDE(vector<int>* mainMemory, int instructMemLoc, int* accumptr) {
+    int divisor = mainMemory->at(instructMemLoc);
+    cout << *accumptr << " / " << divisor << endl;
+    if (divisor == 0) cout << "Divide by zero error" << endl;
+    else *accumptr = *accumptr / divisor;
+}
+
+void MULTIPLY(vector<int>* mainMemory, int instructMemLoc, int* accumptr) {
+    cout << *accumptr << " * " << mainMemory->at(instructMemLoc) << endl;
+    *accumptr = *accumptr * mainMemory->at(instructMemLoc);
+}
+
                                             // accumptr is a pointer to accumulator, use *accumptr to access accumulator
 void doInstruction(string instruct,  vector<int>* mainMemory, int instructMemLoc, int* accumptr, int* currMemLoc){ // matches instruction to operation and calls the correct function
     bool branched = false; // prevents an extra count to current memory location if branched is true.
@@ -96,28 +108,23 @@ void doInstruction(string instruct,  vector<int>* mainMemory, int instructMemLoc
 
     }
     else if(instruct == "+30" || instruct == "-30"){
-
-            cout << "Adding: " << *accumptr << " + " << (*mainMemory).at(instructMemLoc) << " = ";
-            *accumptr = *accumptr + (*mainMemory).at(instructMemLoc);
-            cout << *accumptr << " which is now in the accumulator."<< endl;
+        cout << "Adding: " << *accumptr << " + " << (*mainMemory).at(instructMemLoc) << " = ";
+        *accumptr = *accumptr + (*mainMemory).at(instructMemLoc);
+        cout << *accumptr << " which is now in the accumulator."<< endl;
 
         
     }
     else if(instruct == "+31" || instruct == "-31"){
-            cout << "Subtracting: " << *accumptr << " - " << (*mainMemory).at(instructMemLoc) << " = ";
-            *accumptr = *accumptr - (*mainMemory).at(instructMemLoc);
-            cout << *accumptr << " which is now in the accumulator."<< endl;
+        cout << "Subtracting: " << *accumptr << " - " << (*mainMemory).at(instructMemLoc) << " = ";
+        *accumptr = *accumptr - (*mainMemory).at(instructMemLoc);
+        cout << *accumptr << " which is now in the accumulator."<< endl;
 
     }
     else if(instruct == "+32"  || instruct == "-32"){
-        int divisor = mainMemory->at(instructMemLoc);
-        cout << *accumptr << " / " << divisor << endl;
-        if (divisor == 0) cout << "Divide by zero error" << endl;
-        else *accumptr = *accumptr / divisor;
+        DIVIDE(mainMemory, instructMemLoc, accumptr);
     }
     else if(instruct == "+33" || instruct == "-33"){
-        cout << *accumptr << " * " << mainMemory->at(instructMemLoc) << endl;
-        *accumptr = *accumptr * mainMemory->at(instructMemLoc);
+        MULTIPLY(mainMemory, instructMemLoc, accumptr);
     }
     else if(instruct == "+40" || instruct == "-40"){
         *currMemLoc = instructMemLoc;
@@ -128,7 +135,6 @@ void doInstruction(string instruct,  vector<int>* mainMemory, int instructMemLoc
         if(*accumptr < 0){
             *currMemLoc = instructMemLoc;
             cout << "Accumulator was negative branching to " << *currMemLoc << "." << endl;
-            
             branched = true;
         }else{
             cout << "Accumulator wasn't negative didn't branch." << endl;
@@ -142,7 +148,7 @@ void doInstruction(string instruct,  vector<int>* mainMemory, int instructMemLoc
             
             branched = true;
         }else{
-            cout << "Accumulator wasn't zero still didn't branch."<< endl;
+            cout << "Accumulator wasn't zero didn't branch."<< endl;
             
         }   
 
