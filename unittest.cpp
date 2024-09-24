@@ -145,6 +145,46 @@ void workingBranchZero(){ // both insruction +42/-42 for changing memory locatio
     }
 }
 
+void divideTests(){
+    vector<int> mainMemory;
+    int accumulator = 0;
+    int *accumptr = &accumulator;
+    mainMemory.resize(4);
+    mainMemory[0] = 10;
+    mainMemory[1] = 20;
+    mainMemory[2] = 30;
+    mainMemory[3] = 0;
+    //Test 50 / 10
+    *accumptr = 50;
+    DIVIDE(&mainMemory, 0, accumptr);
+    if (*accumptr == 5) cout << "Divide test 50 / 10: Passed" << endl;
+    else cout << "Divide test 50 / 10: Failed" << endl;
+    //Test divide by zero
+    DIVIDE(&mainMemory, 3, accumptr);
+    if (*accumptr == 5) cout << "Divide by zero test: Passed" << endl;
+    else cout << "Divide by zero test: Failed" << endl; //
+}
+
+void multiplyTests(){
+    vector<int> mainMemory;
+    int accumulator = 0;
+    int *accumptr = &accumulator;
+    mainMemory.resize(3);
+    mainMemory[0] = 10;
+    mainMemory[1] = 20;
+    mainMemory[2] = 30;
+    //Test 5 * 20
+    *accumptr = 5;
+    MULTIPLY(&mainMemory, 1, accumptr);
+    if (*accumptr == 100) cout << "Test 5 * 20: Passed" << endl;
+    else cout << "Test 5 * 20: Failed" << endl;
+    //Test 0 * 10
+    *accumptr = 0;
+    MULTIPLY(&mainMemory, 0, accumptr);
+    if (*accumptr == 100) cout << "Test 0 * 10: Passed" << endl;
+    else cout << "Test 0 * 10: Failed" << endl;
+}
+
 int UNITTESTING(){
     workingLoadWord();
     oobLoadWord();
@@ -153,5 +193,7 @@ int UNITTESTING(){
     workingBranch();
     workingBranchNegative();
     workingBranchZero();
+    divideTests();
+    multiplyTests();
     return 0;
 }
