@@ -1,4 +1,4 @@
-#include <vector>
+/*#include <vector>
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
@@ -56,7 +56,7 @@ void test_READ() {
     vector<int> memory(10, 0);
 
     // Test valid location (within bounds)
-    input.str("42");
+    
     cerr << "valid location test\n";
     READ(5, &memory);
     if (memory[5] != 42) {
@@ -109,7 +109,7 @@ void test_WRITE() {
         cerr << "error: write test failed (out of bounds)." << endl;
     }
     cerr << "invalid location test complete\n\n";
-}
+} 
 
 int main() {
     // Run the test functions
@@ -118,3 +118,4 @@ int main() {
 
     return 0;
 }
+*/

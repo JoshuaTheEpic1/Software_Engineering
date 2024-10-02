@@ -1,8 +1,12 @@
 #include <iostream>
 #include <vector>
+#include <sstream>
+#include <stdexcept>
 #include "operations.h"
-
 using namespace std;
+
+istringstream input;
+ostringstream output;
 
 void workingLoadWord(){
     vector<int> mainMemory;
@@ -144,7 +148,103 @@ void workingBranchZero(){ // both insruction +42/-42 for changing memory locatio
         }
     }
 }
+void test_READ() {
+    // Initialize memory
 
+    cerr << "Beginning read test\n";
+    vector<int> memory(10, 0);
+
+    // Test valid location (within bounds)
+    
+    cerr << "valid location test\n";
+    READ(5, &memory);
+    if (memory[5] != 42) {
+        cerr << "error: read test failed (valid location)." << endl;
+    }
+    cerr << "valid location test complete\n\n";
+    
+    // Test invalid location (out of bounds)
+    input.str("100");
+    cerr << "invalid location test\n";
+    output.str("");  // Reset output stream
+    READ(15, &memory);
+    if (output.str() != "error: memory location out of bounds.\n") {
+        cerr << "error: read test failed (out of bounds)." << endl;
+    }
+    cerr << "invalid location test complete\n\n";
+
+    // Test invalid input (non-integer)
+    input.str("invalid");
+    cerr << "invalid input type test\n";
+    output.str("");  // Reset output stream
+    READ(3, &memory);
+    if (output.str() != "error: invalid input. Expected an integer.\n") {
+        cerr << "error: read test failed (invalid input)." << endl;
+    }
+    cerr << "invalid input type test complete\n\n";
+    
+}
+void test_WRITE() {
+    // Initialize memory
+    cerr << "Beginning write test\n";
+    vector<int> memory(10, 0);
+    memory[5] = 42;
+
+    // Test valid location (within bounds)
+    output.str("");  // Reset output stream
+    cerr << "valid location test\n";
+    output << WRITE(5, &memory);
+    if (output.str() != "42") {
+        cout << endl <<  memory[5] << endl;
+        cerr << "error: write test failed (valid location)." << endl;
+    }
+    cerr << "valid location test complete\n\n";
+
+    // Test invalid location (out of bounds)
+    output.str("");  // Reset output stream
+    cerr << "invalid location test\n";
+    output << WRITE(15, &memory);
+    if (output.str() != "-1") {
+        cerr << "error: write test failed (out of bounds)." << endl;
+    }
+    cerr << "invalid location test complete\n\n";
+} 
+void testAdd(){
+    vector<int> mainMemory;
+    int accumulator = 10;
+    int *accumptr = &accumulator;
+    int currMemLoc = 0;
+    mainMemory.resize(3);
+    mainMemory.at(2) = 20;
+    doInstruction("+30",&mainMemory,2,accumptr,&currMemLoc);
+    if(accumulator == 30){
+        cout << "First test add passed." << endl;
+        doInstruction("-30",&mainMemory,2,accumptr,&currMemLoc);
+        if(accumulator == 50){
+            cout << "Second test add passed." << endl;
+        }
+        else{cout << "Second test add failed. Should be 50 got: " << accumulator << endl;}
+    }
+    else{cout << "First test add failed. Should be 30 got: " << accumulator << endl;}
+}
+void testSubtract(){
+    vector<int> mainMemory;
+    int accumulator = 10;
+    int *accumptr = &accumulator;
+    int currMemLoc = 0;
+    mainMemory.resize(3);
+    mainMemory.at(2) = 20;
+    doInstruction("+31",&mainMemory,2,accumptr,&currMemLoc);
+    if(accumulator == -10){
+        cout << "First test subtract passed." << endl;
+        doInstruction("-31",&mainMemory,2,accumptr,&currMemLoc);
+        if(accumulator == -30){
+            cout << "Second test subtract passed." << endl;
+        }
+        else{cout << "Second test subtract failed. Should be -10 got: " << accumulator << endl;}
+    }
+    else{cout << "First test subtract failed. Should be 0 got: " << accumulator << endl;}
+}
 void divideTests(){
     vector<int> mainMemory;
     int accumulator = 0;
