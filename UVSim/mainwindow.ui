@@ -14,26 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QListView" name="memoryListView">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>60</y>
-      <width>141</width>
-      <height>481</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QListView" name="instructionListView">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>60</y>
-      <width>141</width>
-      <height>481</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="runInstructionButton">
     <property name="geometry">
      <rect>
@@ -44,7 +24,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Execute Instruction</string>
+     <string>Execute Next  Instruction</string>
     </property>
    </widget>
    <widget class="QPushButton" name="inputButton">
@@ -60,7 +40,7 @@
      <string>Enter</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="textEdit">
+   <widget class="QTextEdit" name="textInput">
     <property name="enabled">
      <bool>false</bool>
     </property>
@@ -79,36 +59,10 @@
      </sizepolicy>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>30</y>
-      <width>63</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Memory</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>220</x>
-      <y>30</y>
-      <width>81</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Instructions</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>420</x>
+      <x>400</x>
       <y>190</y>
       <width>63</width>
       <height>20</height>
@@ -118,16 +72,65 @@
      <string>Input</string>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>25</height>
-    </rect>
-   </property>
+   <widget class="QLabel" name="accumulator">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>80</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Accumlator:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="accumulatorInt">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>80</y>
+      <width>49</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="runAllInstructionButtons">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>100</y>
+      <width>141</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Execute All Instructions</string>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="memoryTable">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>151</width>
+      <height>501</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="instructionTable">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>10</y>
+      <width>151</width>
+      <height>501</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
