@@ -58,5 +58,3 @@ BRANCH = 4087 runs the word at location 87
 BRANCHNEG = 4192 Branch to memory location 92 if the accumulator is negative.
 BRANCHZERO = 4252 Branch to memory location 52 if the accumulator is zero.
 HALT = 43XX Pauses the program.  The memory location does not change anything.
-WARNING
-Please keep in mind that the BasicML file must occupy memory location 00.  Overwriting this memory location will cause errors.
