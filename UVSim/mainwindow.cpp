@@ -1,8 +1,8 @@
 #include <iostream>
-#include <fstream>
 #include <sstream>
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "operations.h"
 
 int countingTemp = 0;
 
@@ -19,10 +19,12 @@ MainWindow::MainWindow(QWidget *parent)
 
 
 }
-void MainWindow::CreateLists(){
+void MainWindow::createLists(){
     std::ostringstream temp;
     ui->memoryTable->setHorizontalHeaderItem(0, new QTableWidgetItem("Memory"));
     ui->instructionTable->setHorizontalHeaderItem(0, new QTableWidgetItem("Instructions"));
+    this->instructions.resize(100);
+    this->instructMemoryLocations.resize(100);
     for(int i=0; i < 100; i++){
         if(i < 10){
 
@@ -35,28 +37,11 @@ void MainWindow::CreateLists(){
             temp << i;
             ui->memoryTable->setVerticalHeaderItem(i, new QTableWidgetItem(QString::fromStdString(temp.str())));
         }
-        ui->memoryTable->setItem(i,0,new QTableWidgetItem("NULL"));
+        ui->memoryTable->setItem(i,0,new QTableWidgetItem("0"));
         ui->instructionTable->setItem(i,0,new QTableWidgetItem(""));
-        if(i % 2 == 0){
-            QTableWidgetItem *temp = ui->memoryTable->item(i,0);
-            temp->setBackground(Qt::blue);
-
-        }
-        else{
-            QTableWidgetItem *temp = ui->memoryTable->item(i,0);
-            temp->setBackground(Qt::green);
-        }
     }
+    ui->memoryTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-}
-void MainWindow::test(){
-
-    QString temp = "test";
-    std::cout << temp.toStdString() << std::endl;
-    std::cout << ui->accumulator->text().toStdString() << std::endl;
-    int test = 10;
-    temp = QString::fromStdString(std::to_string(test));
-    ui->accumulatorInt->setText(temp);
 }
 MainWindow::~MainWindow()
 {
@@ -65,18 +50,168 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_runInstructionButton_clicked()
 {
-    for(int i = countingTemp; i <= countingTemp; i++){
-        ui->accumulatorInt->setText(QString::fromStdString(std::to_string(i)));
-        if(i % 2 == 0){
-            QTableWidgetItem *temp = ui->instructionTable->item(i,0);
-            temp->setBackground(Qt::blue);
+    this->waitingForInputFromAll = false;
 
+    if(this->mainMemory.getMemoryLocation() < this->mainMemory.getMemoryList().size()){
+        std::ostringstream memoryLocationText;
+        std::ostringstream instructionText;
+        QTableWidgetItem *temp = ui->instructionTable->item(this->mainMemory.getMemoryLocation(),0);
+        if(temp->text().length() >= 5 && (temp->text().at(0) == QString::fromStdString("+") || temp->text().at(0) == QString::fromStdString("-"))){
+            for(int j = 0; j < 3; j++){
+                QString qTemp = temp->text().at(j);
+                instructionText << qTemp.toStdString();
+                if(j<2){
+                    QString qTemp = temp->text().at(j+3);
+                    memoryLocationText << qTemp.toStdString();
+                }
+            }
+            std::cout << instructionText.str() << std::endl;
+            std::cout << memoryLocationText.str() << std::endl;
+            try{
+                int instructionInt = std::stoi(instructionText.str());
+                int memoryLocationInt = std::stoi(memoryLocationText.str());
+                if(instructionInt == 10 || instructionInt == -10){
+                    ui->textInput->setPlaceholderText("Please type a number");
+                    this->instructionMemoryLocation = memoryLocationInt;
+                    this->enableButton();
+                    this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation() + 1);
+                }else{doInstruction(instructionInt,memoryLocationInt,&this->mainMemory);}
+                temp->setBackground(QColor::fromRgb(3,223,252));
+            }
+            catch(...){
+                temp->setBackground(QColor::fromRgb(255,0,0));
+
+            }
         }
         else{
-            QTableWidgetItem *temp = ui->instructionTable->item(i,0);
-            temp->setBackground(Qt::green);
+            temp->setBackground(QColor::fromRgb(255,0,0));
+            this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation() + 1);
+
         }
+        std::cout << mainMemory.getMemoryLocation() << std::endl;
+        ui->instructionTable->selectRow(this->mainMemory.getMemoryLocation()-1);
+        ui->accumulatorInt->setText(QString::fromStdString(std::to_string(this->mainMemory.getAccumulator())));
     }
-    countingTemp++;
+
 }
+
+
+void MainWindow::on_inputButton_clicked()
+{
+    try{
+        int temp = std::stoi(ui->textInput->toPlainText().toStdString());
+        READ(this->instructionMemoryLocation,&this->mainMemory,temp);
+        ui->textInput->setEnabled(false);
+        ui->textInput->clear();
+        ui->inputButton->setEnabled(false);
+        ui->runAllInstructionButtons->setEnabled(true);
+        ui->runInstructionButton->setEnabled(true);
+        if(this->waitingForInputFromAll == true){
+            on_runAllInstructionButtons_clicked();
+        }
+
+    }
+    catch(...){
+        ui->textInput->setPlaceholderText("ERROR: Please type a number");
+
+    }
+
+}
+
+
+void MainWindow::on_runAllInstructionButtons_clicked()
+{
+    this->waitingForInputFromAll = false;
+    for(int i = this->mainMemory.getMemoryLocation(); i < this->mainMemory.getMemoryList().size() && this->mainMemory.getMemoryLocation() <100; i++){
+        std::ostringstream memoryLocationText;
+        std::ostringstream instructionText;
+        QTableWidgetItem *temp = ui->instructionTable->item(i,0);
+        if(temp->text().length() >= 5 && (temp->text().at(0) == QString::fromStdString("+") || temp->text().at(0) == QString::fromStdString("-"))){
+            for(int j = 0; j < 3; j++){
+                QString qTemp = temp->text().at(j);
+                instructionText << qTemp.toStdString();
+                if(j<2){
+                    QString qTemp = temp->text().at(j+3);
+                    memoryLocationText << qTemp.toStdString();
+                }
+            }
+            try{
+                int instructionInt = std::stoi(instructionText.str());
+                int memoryLocationInt = std::stoi(memoryLocationText.str());
+                if(instructionInt == 43 || instructionInt == -43){
+                    this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation() + 1);
+                    ui->instructionTable->selectRow(i);
+                    pause();
+                    break;
+                }
+                else if(instructionInt == 10 || instructionInt == -10){
+                    ui->textInput->setPlaceholderText("Please type a number");
+                    this->waitingForInputFromAll = true;
+                    this->instructionMemoryLocation = memoryLocationInt;
+                    this->enableButton();
+                    this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation() + 1);
+                    temp->setBackground(QColor::fromRgb(3,223,252));
+                    ui->instructionTable->selectRow(i);
+                    break;
+                }
+                doInstruction(instructionInt,memoryLocationInt,&this->mainMemory);
+            }
+            catch(...){
+                temp->setBackground(QColor::fromRgb(255,0,0));
+
+            }
+            std::cout << instructionText.str() << std::endl;
+            std::cout << memoryLocationText.str() << std::endl;
+            temp->setBackground(QColor::fromRgb(3,223,252));
+        }
+        else{
+            temp->setBackground(QColor::fromRgb(255,0,0));
+            this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation() + 1);
+
+        }
+        ui->instructionTable->selectRow(i);
+        ui->accumulatorInt->setText(QString::fromStdString(std::to_string(this->mainMemory.getAccumulator())));
+
+    }
+
+}
+
+void MainWindow::pause(){
+    ui->runAllInstructionButtons->setEnabled(false);
+    ui->runInstructionButton->setEnabled(false);
+    ui->unPauseButton->setEnabled(true);
+
+}
+void MainWindow::enableButton(){
+    ui->runAllInstructionButtons->setEnabled(false);
+    ui->runInstructionButton->setEnabled(false);
+    ui->textInput->setEnabled(true);
+    ui->inputButton->setEnabled(true);
+}
+
+
+
+void MainWindow::on_unPauseButton_clicked()
+{
+
+    ui->unPauseButton->setEnabled(false);
+    on_runAllInstructionButtons_clicked();
+}
+
+
+
+
+
+
+void MainWindow::on_resetButton_clicked()
+{
+    std::cout << "resetting" << std::endl;
+    for(int i = 0; i < mainMemory.getMemoryList().size(); i++){
+        mainMemory.setValueAt(0,i);
+    }
+    mainMemory.setMemoryLocation(0);
+    mainMemory.setAccumulator(0);
+    createLists();
+}
+
 

@@ -1,0 +1,79 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-926fe422d04f9fb15a6c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "UVSim",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "UVSim::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-UVSim-Debug-c4fb83e8ae40c13e6766.json",
+					"name" : "UVSim",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "UVSim_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-UVSim_autogen-Debug-b200bee9dce9699eea4a.json",
+					"name" : "UVSim_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "UVSim_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-UVSim_autogen_timestamp_deps-Debug-a1d42e3581b4d2bd44ed.json",
+					"name" : "UVSim_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/pmans/Documents/Classes/CS 2450/Team Project/Software_Engineering-1/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Test",
+		"source" : "C:/Users/pmans/Documents/Classes/CS 2450/Team Project/Software_Engineering-1/UVSim"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

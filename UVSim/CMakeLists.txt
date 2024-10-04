@@ -23,6 +23,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(UVSim
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        operations.cpp
+        operations.h
+        unittest.cpp
+
+        mainMemory.cpp
+        mainMemory.h
+
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET UVSim APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

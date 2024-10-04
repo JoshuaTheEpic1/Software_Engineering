@@ -24,13 +24,16 @@
      </rect>
     </property>
     <property name="text">
-     <string>Execute Next  Instruction</string>
+     <string>Execute Next Instruction</string>
     </property>
    </widget>
    <widget class="QPushButton" name="inputButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>380</x>
       <y>260</y>
       <width>83</width>
       <height>29</height>
@@ -46,9 +49,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>380</x>
       <y>220</y>
-      <width>104</width>
+      <width>181</width>
       <height>31</height>
      </rect>
     </property>
@@ -57,19 +60,6 @@
       <horstretch>0</horstretch>
       <verstretch>0</verstretch>
      </sizepolicy>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>190</y>
-      <width>63</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Input</string>
     </property>
    </widget>
    <widget class="QLabel" name="accumulator">
@@ -95,7 +85,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>0</string>
     </property>
    </widget>
    <widget class="QPushButton" name="runAllInstructionButtons">
@@ -129,6 +119,35 @@
       <width>151</width>
       <height>501</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="unPauseButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>140</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Unpause</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="resetButton">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>550</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reset</string>
     </property>
    </widget>
   </widget>
