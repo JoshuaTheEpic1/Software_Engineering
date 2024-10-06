@@ -24,8 +24,10 @@ void READ(int instructMemLoc, MainMemory* mainMemory, int value) {
         testInput.str("42");
         testInput >> tempword;
     }else{
+        /* Currently un-needed with the input from GUI
         cout << "Enter the number you'd to store in memory." << endl;
         cin >> tempword;
+        */
     }
 
 
@@ -69,11 +71,11 @@ void MULTIPLY(MainMemory* mainMemory, int instructMemLoc) {
 void doInstruction(int instruct, int instructMemLoc, MainMemory* mainMemory){ // matches instruction to operation and calls the correct function
     bool branched = false; // prevents an extra count to current memory location if branched is true.
     switch(instruct){
-        /*case 10:
+        case 10:
         case -10:
             READ(instructMemLoc,mainMemory,10);
             cout << "Memory location: " << instructMemLoc << " has loaded: " << mainMemory->getValueAt(instructMemLoc) << "." << endl;
-            break;*/
+            break;
         case 11:
         case -11:
             WRITE(instructMemLoc,mainMemory);

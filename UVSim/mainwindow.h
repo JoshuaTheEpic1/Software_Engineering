@@ -21,20 +21,20 @@ public:
     ~MainWindow();
     void createLists();
     void pause();
-    void enableButton();
+    void enableInput();
     MainMemory mainMemory;
 
 
 private slots:
     void on_runInstructionButton_clicked();
 
-    void on_inputButton_clicked(bool checked);
+    //void on_inputButton_clicked(bool checked);
 
     void on_inputButton_clicked();
 
     void on_runAllInstructionButtons_clicked();
 
-    void on_pushButton_clicked();
+    //void on_pushButton_clicked();
 
     void on_unPauseButton_clicked();
 

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <QMessageBox>
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "operations.h"
@@ -43,6 +44,7 @@ void MainWindow::createLists(){
     ui->memoryTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
 }
+
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -73,9 +75,16 @@ void MainWindow::on_runInstructionButton_clicked()
                 if(instructionInt == 10 || instructionInt == -10){
                     ui->textInput->setPlaceholderText("Please type a number");
                     this->instructionMemoryLocation = memoryLocationInt;
-                    this->enableButton();
+                    this->enableInput();
                     this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation() + 1);
-                }else{doInstruction(instructionInt,memoryLocationInt,&this->mainMemory);}
+                }
+                else if(instructionInt == 11 || instructionInt == -11){
+                    //Gives pop up instead of using write function so it displays on GUI
+                    QString writeMsg = QString("The value in memory location %1 is %2").arg(QString::number(memoryLocationInt)).arg(QString::number(this->mainMemory.getValueAt(memoryLocationInt)));
+                    QMessageBox::about(this, "Write Command", writeMsg);
+                    this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation() + 1);
+                }
+                else{doInstruction(instructionInt,memoryLocationInt,&this->mainMemory);}
                 temp->setBackground(QColor::fromRgb(3,223,252));
             }
             catch(...){
@@ -99,9 +108,12 @@ void MainWindow::on_runInstructionButton_clicked()
 void MainWindow::on_inputButton_clicked()
 {
     try{
+        QString tempStr = ui->textInput->toPlainText();
         int temp = std::stoi(ui->textInput->toPlainText().toStdString());
         READ(this->instructionMemoryLocation,&this->mainMemory,temp);
+        ui->memoryTable->setItem(instructionMemoryLocation,0,new QTableWidgetItem(tempStr)); //Makes value visible within the memory table
         ui->textInput->setEnabled(false);
+        ui->textInput->setPlaceholderText(""); //Clears message/clarifies as inactive
         ui->textInput->clear();
         ui->inputButton->setEnabled(false);
         ui->runAllInstructionButtons->setEnabled(true);
@@ -148,7 +160,7 @@ void MainWindow::on_runAllInstructionButtons_clicked()
                     ui->textInput->setPlaceholderText("Please type a number");
                     this->waitingForInputFromAll = true;
                     this->instructionMemoryLocation = memoryLocationInt;
-                    this->enableButton();
+                    this->enableInput();
                     this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation() + 1);
                     temp->setBackground(QColor::fromRgb(3,223,252));
                     ui->instructionTable->selectRow(i);
@@ -182,7 +194,7 @@ void MainWindow::pause(){
     ui->unPauseButton->setEnabled(true);
 
 }
-void MainWindow::enableButton(){
+void MainWindow::enableInput(){
     ui->runAllInstructionButtons->setEnabled(false);
     ui->runInstructionButton->setEnabled(false);
     ui->textInput->setEnabled(true);
@@ -211,6 +223,7 @@ void MainWindow::on_resetButton_clicked()
     }
     mainMemory.setMemoryLocation(0);
     mainMemory.setAccumulator(0);
+    ui->accumulatorInt->setText("0"); //Displays accumulator as 0 on reset
     createLists();
 }
 
