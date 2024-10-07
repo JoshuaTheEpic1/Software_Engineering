@@ -45,7 +45,16 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
     w.createLists();
-    /*if(!(UNITTESTINGBOOL)){
+    if(UNITTESTINGBOOL){
+        cout << endl;
+        cout << endl;
+        cout << endl;
+        cout << endl;
+        cout << endl;
+        cout << "Unit Testing Results: " << endl;
+        UNITTESTING();
+    }
+    /*if(!(UNITTESTINGBOOL)) { // old code used for prototype
         vector<int> mainMemory;
         vector<string> instructions;
         vector<int> instructMemoryLocations;

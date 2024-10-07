@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>UVSim</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="runInstructionButton">
@@ -33,7 +33,7 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>380</x>
+      <x>370</x>
       <y>260</y>
       <width>83</width>
       <height>29</height>
@@ -49,8 +49,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>220</y>
+      <x>370</x>
+      <y>230</y>
       <width>181</width>
       <height>31</height>
      </rect>
@@ -65,8 +65,8 @@
    <widget class="QLabel" name="accumulator">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>80</y>
+      <x>530</x>
+      <y>60</y>
       <width>71</width>
       <height>16</height>
      </rect>
@@ -78,8 +78,8 @@
    <widget class="QLabel" name="accumulatorInt">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>80</y>
+      <x>600</x>
+      <y>60</y>
       <width>49</width>
       <height>16</height>
      </rect>
@@ -140,14 +140,14 @@
    <widget class="QPushButton" name="resetButton">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>550</y>
+      <x>120</x>
+      <y>510</y>
       <width>80</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>Reset</string>
+     <string>Reset All</string>
     </property>
    </widget>
   </widget>

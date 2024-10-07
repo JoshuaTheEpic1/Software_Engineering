@@ -5,7 +5,7 @@
 #include <sstream>
 #include "mainMemory.h"
 
-const bool UNITTESTINGBOOL = false; // switch this to true if you want to unit test.
+const bool UNITTESTINGBOOL = false; // switch this to true if you want to unit test. currently unused in this file because of gui
 
 // assign accumulator value to that of the given memory location
 void loadWord( MainMemory* mainMemory, int instructMemLoc){
@@ -124,7 +124,6 @@ void doInstruction(int instruct, int instructMemLoc, MainMemory* mainMemory){ //
                 branched = true;
             }else{
                 cout << "Accumulator wasn't negative didn't branch." << endl;
-
             }
             break;
         case 42:

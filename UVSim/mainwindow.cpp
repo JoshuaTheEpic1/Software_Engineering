@@ -84,8 +84,14 @@ void MainWindow::on_runInstructionButton_clicked()
                     QMessageBox::about(this, "Write Command", writeMsg);
                     this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation() + 1);
                 }
-                else{doInstruction(instructionInt,memoryLocationInt,&this->mainMemory);}
+                else{
+                    doInstruction(instructionInt,memoryLocationInt,&this->mainMemory);
+
+                }
                 temp->setBackground(QColor::fromRgb(3,223,252));
+                if(instructionInt == 21 || instructionInt == -21){
+                    ui->memoryTable->setItem(memoryLocationInt,0,new QTableWidgetItem(QString::number(mainMemory.getAccumulator())));
+                }
             }
             catch(...){
                 temp->setBackground(QColor::fromRgb(255,0,0));
@@ -100,6 +106,7 @@ void MainWindow::on_runInstructionButton_clicked()
         std::cout << mainMemory.getMemoryLocation() << std::endl;
         ui->instructionTable->selectRow(this->mainMemory.getMemoryLocation()-1);
         ui->accumulatorInt->setText(QString::fromStdString(std::to_string(this->mainMemory.getAccumulator())));
+
     }
 
 }
@@ -167,6 +174,9 @@ void MainWindow::on_runAllInstructionButtons_clicked()
                     break;
                 }
                 doInstruction(instructionInt,memoryLocationInt,&this->mainMemory);
+                if(instructionInt == 21 || instructionInt == -21){
+                    ui->memoryTable->setItem(memoryLocationInt,0,new QTableWidgetItem(QString::number(mainMemory.getAccumulator())));
+                }
             }
             catch(...){
                 temp->setBackground(QColor::fromRgb(255,0,0));

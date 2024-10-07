@@ -29,12 +29,13 @@ public:
     QPushButton *runInstructionButton;
     QPushButton *inputButton;
     QTextEdit *textInput;
-    QLabel *label_3;
     QLabel *accumulator;
     QLabel *accumulatorInt;
     QPushButton *runAllInstructionButtons;
     QTableWidget *memoryTable;
     QTableWidget *instructionTable;
+    QPushButton *unPauseButton;
+    QPushButton *resetButton;
     QStatusBar *statusbar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -49,25 +50,23 @@ public:
         runInstructionButton->setGeometry(QRect(370, 60, 141, 41));
         inputButton = new QPushButton(centralwidget);
         inputButton->setObjectName("inputButton");
-        inputButton->setGeometry(QRect(410, 260, 83, 29));
+        inputButton->setEnabled(false);
+        inputButton->setGeometry(QRect(370, 260, 83, 29));
         textInput = new QTextEdit(centralwidget);
         textInput->setObjectName("textInput");
         textInput->setEnabled(false);
-        textInput->setGeometry(QRect(400, 220, 104, 31));
+        textInput->setGeometry(QRect(370, 230, 181, 31));
         QSizePolicy sizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(textInput->sizePolicy().hasHeightForWidth());
         textInput->setSizePolicy(sizePolicy);
-        label_3 = new QLabel(centralwidget);
-        label_3->setObjectName("label_3");
-        label_3->setGeometry(QRect(400, 190, 63, 20));
         accumulator = new QLabel(centralwidget);
         accumulator->setObjectName("accumulator");
-        accumulator->setGeometry(QRect(540, 80, 71, 16));
+        accumulator->setGeometry(QRect(530, 60, 71, 16));
         accumulatorInt = new QLabel(centralwidget);
         accumulatorInt->setObjectName("accumulatorInt");
-        accumulatorInt->setGeometry(QRect(610, 80, 49, 16));
+        accumulatorInt->setGeometry(QRect(600, 60, 49, 16));
         runAllInstructionButtons = new QPushButton(centralwidget);
         runAllInstructionButtons->setObjectName("runAllInstructionButtons");
         runAllInstructionButtons->setGeometry(QRect(370, 100, 141, 41));
@@ -77,6 +76,13 @@ public:
         instructionTable = new QTableWidget(centralwidget);
         instructionTable->setObjectName("instructionTable");
         instructionTable->setGeometry(QRect(170, 10, 151, 501));
+        unPauseButton = new QPushButton(centralwidget);
+        unPauseButton->setObjectName("unPauseButton");
+        unPauseButton->setEnabled(false);
+        unPauseButton->setGeometry(QRect(370, 140, 80, 24));
+        resetButton = new QPushButton(centralwidget);
+        resetButton->setObjectName("resetButton");
+        resetButton->setGeometry(QRect(120, 510, 80, 24));
         MainWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -89,13 +95,14 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        runInstructionButton->setText(QCoreApplication::translate("MainWindow", "Execute Next  Instruction", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "UVSim", nullptr));
+        runInstructionButton->setText(QCoreApplication::translate("MainWindow", "Execute Next Instruction", nullptr));
         inputButton->setText(QCoreApplication::translate("MainWindow", "Enter", nullptr));
-        label_3->setText(QCoreApplication::translate("MainWindow", "Input", nullptr));
         accumulator->setText(QCoreApplication::translate("MainWindow", "Accumlator:", nullptr));
-        accumulatorInt->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        accumulatorInt->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
         runAllInstructionButtons->setText(QCoreApplication::translate("MainWindow", "Execute All Instructions", nullptr));
+        unPauseButton->setText(QCoreApplication::translate("MainWindow", "Unpause", nullptr));
+        resetButton->setText(QCoreApplication::translate("MainWindow", "Reset All", nullptr));
     } // retranslateUi
 
 };
