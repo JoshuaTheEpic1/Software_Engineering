@@ -1,5 +1,10 @@
+Table of Contents
+=================
+* [BasicML Explained](#welcome-to-basicml)<br>
+* [Using The GUI](#using-the-gui) <br>
+* [Building Your self]()<br>
 
-Welcome to BasicML.
+## Welcome to BasicML.
 This program requires a C++ to run.
 
 To program in BasicML, you will need to select an operation and a memory location.
@@ -58,3 +63,7 @@ BRANCH = 4087 runs the word at location 87
 BRANCHNEG = 4192 Branch to memory location 92 if the accumulator is negative.
 BRANCHZERO = 4252 Branch to memory location 52 if the accumulator is zero.
 HALT = 43XX Pauses the program.  The memory location does not change anything.
+## Using the GUI
+<img src="https://i.imgur.com/BintgIp.png" width="800" height="632"/>
+## Building
+You can build the program by using the Qt program you can grab it (here)[https://www.qt.io/download-dev]
