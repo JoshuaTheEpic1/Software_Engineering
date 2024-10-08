@@ -64,6 +64,6 @@ BRANCHNEG = 4192 Branch to memory location 92 if the accumulator is negative.
 BRANCHZERO = 4252 Branch to memory location 52 if the accumulator is zero.
 HALT = 43XX Pauses the program.  The memory location does not change anything.
 ## Using the GUI
-<img src="https://i.imgur.com/BintgIp.png" width="800" height="632"/>
+<img src="https://i.imgur.com/BintgIp.png" width="800" height="632"/><br>
 ## Building
-You can build the program by using the Qt program you can grab it (here)[https://www.qt.io/download-dev]
+You can build the program by using the Qt program you can grab it (here)[https://www.qt.io/download-dev] (section work in progress)
