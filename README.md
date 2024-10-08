@@ -1,23 +1,27 @@
+
 Table of Contents
 =================
 * [BasicML Explained](#welcome-to-basicml)<br>
 * [Using The GUI](#using-the-gui) <br>
-* [Building Your self]()<br>
+* [Building](#building)<br>
 
 ## Welcome to BasicML.
 This program requires a C++ to run.
 
 To program in BasicML, you will need to select an operation and a memory location.
 
-Operation: The first two numbers will select what operation you would like to perform.  A complete list of operations will be given later.
-  |
- \|/
- XX  YY
-     /|\
-      |
-Memory Location:  The last two numbers will select the memory location you want to access.
+<pre>
+Operation: The first two numbers will select what operation you would like to perform.
+ |         A complete list of operations will be given later.
+\|/
+XX  YY
+    /|\
+     |
+    Memory Location:  The last two numbers will select the memory location you want to access.
+</pre>
 
 Accumulator: There is an accumulator value that begins at 0 and holds the results of math operations.  
+
 Word: this is a line of BasicML code.  it consists of an operation, and a memory location, such as 30 (Add) and 43 (memory location 43) or a number up to 4 decimal places, positive or negative.
 
 ===== OPERATIONS WITH EXAMPLES BELOW  =====
@@ -66,4 +70,5 @@ HALT = 43XX Pauses the program.  The memory location does not change anything.
 ## Using the GUI
 <img src="https://i.imgur.com/BintgIp.png" width="800" height="632"/><br>
 ## Building
-You can build the program by using the Qt program you can grab it [here](https://www.qt.io/download-dev) (section work in progress)
+You can download the most recent release [here](https://github.com/JoshuaTheEpic1/Software_Engineering/releases).<br> 
+You can build UVSim on your own by using the Qt program you can grab it [here](https://www.qt.io/download-dev).
