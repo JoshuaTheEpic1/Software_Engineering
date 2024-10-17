@@ -13,15 +13,29 @@
   <property name="windowTitle">
    <string>UVSim</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(76, 114, 29);
+</string>
+   </property>
    <widget class="QPushButton" name="runInstructionButton">
     <property name="geometry">
      <rect>
       <x>370</x>
       <y>60</y>
-      <width>141</width>
+      <width>381</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(131, 131, 131);
+color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
      <string>Execute Next Instruction</string>
@@ -33,11 +47,15 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>260</y>
+      <x>490</x>
+      <y>310</y>
       <width>83</width>
       <height>29</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(131, 131, 131);
+color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
      <string>Enter</string>
@@ -49,8 +67,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>230</y>
+      <x>450</x>
+      <y>270</y>
       <width>181</width>
       <height>31</height>
      </rect>
@@ -61,15 +79,21 @@
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
    </widget>
    <widget class="QLabel" name="accumulator">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>60</y>
+      <x>470</x>
+      <y>210</y>
       <width>71</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
      <string>Accumlator:</string>
@@ -78,11 +102,14 @@
    <widget class="QLabel" name="accumulatorInt">
     <property name="geometry">
      <rect>
-      <x>600</x>
-      <y>60</y>
+      <x>540</x>
+      <y>210</y>
       <width>49</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
      <string>0</string>
@@ -93,9 +120,13 @@
      <rect>
       <x>370</x>
       <y>100</y>
-      <width>141</width>
+      <width>381</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(131, 131, 131);
+color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
      <string>Execute All Instructions</string>
@@ -110,6 +141,9 @@
       <height>501</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
    </widget>
    <widget class="QTableWidget" name="instructionTable">
     <property name="geometry">
@@ -120,6 +154,9 @@
       <height>501</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
    </widget>
    <widget class="QPushButton" name="unPauseButton">
     <property name="enabled">
@@ -127,11 +164,15 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>140</y>
+      <x>440</x>
+      <y>150</y>
       <width>80</width>
       <height>24</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(131, 131, 131);
+color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
      <string>Unpause</string>
@@ -140,14 +181,52 @@
    <widget class="QPushButton" name="resetButton">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>510</y>
+      <x>620</x>
+      <y>150</y>
       <width>80</width>
       <height>24</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(131, 131, 131);
+color: rgb(0, 0, 0);</string>
+    </property>
     <property name="text">
      <string>Reset All</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="saveButton">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>530</y>
+      <width>83</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(131, 131, 131);
+color: rgb(0, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>Save to File</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="loadButton">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>530</y>
+      <width>83</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(131, 131, 131);
+color: rgb(0, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>Load File</string>
     </property>
    </widget>
   </widget>

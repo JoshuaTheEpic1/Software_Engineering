@@ -237,4 +237,14 @@ void MainWindow::on_resetButton_clicked()
     createLists();
 }
 
+void MainWindow::on_loadButton_clicked()
+{
+
+}
+
+void MainWindow::on_saveButton_clicked()
+{
+
+}
+
 

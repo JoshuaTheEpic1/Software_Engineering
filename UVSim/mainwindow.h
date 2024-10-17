@@ -40,6 +40,10 @@ private slots:
 
     void on_resetButton_clicked();
 
+    void on_loadButton_clicked();
+
+    void on_saveButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     int memoryLocation = 0;
