@@ -1,9 +1,13 @@
 #include <iostream>
 #include <sstream>
+#include <QFileDialog>
+#include <QFile>
+#include <QTextStream>
 #include <QMessageBox>
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "operations.h"
+
 
 int countingTemp = 0;
 
@@ -239,12 +243,73 @@ void MainWindow::on_resetButton_clicked()
 
 void MainWindow::on_loadButton_clicked()
 {
+    // Open file dialog to select a text file
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Instruction File"), "", tr("Text Files (*.txt)"));
+    
+    // Check if a file was selected
+    if (fileName.isEmpty()) {
+        return;
+    }
 
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QMessageBox::warning(this, tr("Error"), tr("Cannot open file: ") + file.errorString());
+        return;
+    }
+
+    QTextStream in(&file);
+    QString line;
+    int row = 0;
+
+    // Read the file line by line
+    while (!in.atEnd() && row < 100) {
+        line = in.readLine();
+        
+        // Validate the instruction format
+        QRegExp regex("^[+-]\\d{4}$");
+        if (regex.exactMatch(line)) {
+            ui->instructionTable->setItem(row, 0, new QTableWidgetItem(line));
+            row++;
+        } else {
+            QMessageBox::warning(this, tr("Error"), tr("Invalid instruction format in file."));
+            break;
+        }
+    }
+
+    file.close();
 }
 
 void MainWindow::on_saveButton_clicked()
 {
+    // Open file dialog to select a location to save the text file
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Instruction File"), "", tr("Text Files (*.txt)"));
+    
+    // Check if a file name was provided
+    if (fileName.isEmpty()) {
+        return;
+    }
 
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QMessageBox::warning(this, tr("Error"), tr("Cannot open file: ") + file.errorString());
+        return;
+    }
+
+    QTextStream out(&file);
+
+    // Iterate through the instructionTable and write each instruction to the file
+    for (int row = 0; row < 100; ++row) {
+        QTableWidgetItem *item = ui->instructionTable->item(row, 0);
+        if (item) {
+            QString instruction = item->text();
+            if (!instruction.isEmpty()) {
+                out << instruction << "\n";
+            }
+        }
+    }
+
+    file.close();
+    QMessageBox::information(this, tr("Success"), tr("Instructions saved successfully."));
 }
 
 
