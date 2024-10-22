@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QMessageBox>
+#include <QRegularExpression>
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "operations.h"
@@ -265,14 +266,12 @@ void MainWindow::on_loadButton_clicked()
     while (!in.atEnd() && row < 100) {
         line = in.readLine();
         
-        // Validate the instruction format
-        QRegExp regex("^[+-]\\d{4}$");
-        if (regex.exactMatch(line)) {
+        // Validate the instruction format, automatically skipping invalidly formatted instructions
+        QRegularExpression regex("^[+-]\\d{4}$");
+        QRegularExpressionMatch match = regex.match(line);
+        if (match.hasMatch()) {
             ui->instructionTable->setItem(row, 0, new QTableWidgetItem(line));
             row++;
-        } else {
-            QMessageBox::warning(this, tr("Error"), tr("Invalid instruction format in file."));
-            break;
         }
     }
 
