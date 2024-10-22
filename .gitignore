@@ -35,10 +35,14 @@ Thumbs.db
 *.rc
 /.qmake.cache
 /.qmake.stash
+./UVSim/*.txt.user
+./UVsim/CMakeLists.txt
+./UVsim/build/*
 
 # qtcreator generated files
 *.pro.user*
 CMakeLists.txt.user*
+/UVSim/CMakeLists.txt.user*
 
 # xemacs temporary files
 *.flc

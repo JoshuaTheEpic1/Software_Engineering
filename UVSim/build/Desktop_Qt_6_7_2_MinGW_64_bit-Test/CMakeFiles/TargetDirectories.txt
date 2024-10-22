@@ -1,9 +1,0 @@
-C:/Users/pmans/Documents/Classes/CS 2450/Team Project/Software_Engineering-1/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Test/CMakeFiles/UVSim.dir
-C:/Users/pmans/Documents/Classes/CS 2450/Team Project/Software_Engineering-1/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Test/CMakeFiles/edit_cache.dir
-C:/Users/pmans/Documents/Classes/CS 2450/Team Project/Software_Engineering-1/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Test/CMakeFiles/rebuild_cache.dir
-C:/Users/pmans/Documents/Classes/CS 2450/Team Project/Software_Engineering-1/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Test/CMakeFiles/list_install_components.dir
-C:/Users/pmans/Documents/Classes/CS 2450/Team Project/Software_Engineering-1/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Test/CMakeFiles/install.dir
-C:/Users/pmans/Documents/Classes/CS 2450/Team Project/Software_Engineering-1/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Test/CMakeFiles/install/local.dir
-C:/Users/pmans/Documents/Classes/CS 2450/Team Project/Software_Engineering-1/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Test/CMakeFiles/install/strip.dir
-C:/Users/pmans/Documents/Classes/CS 2450/Team Project/Software_Engineering-1/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Test/CMakeFiles/UVSim_autogen_timestamp_deps.dir
-C:/Users/pmans/Documents/Classes/CS 2450/Team Project/Software_Engineering-1/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Test/CMakeFiles/UVSim_autogen.dir
