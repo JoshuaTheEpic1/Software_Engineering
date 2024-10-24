@@ -311,4 +311,20 @@ void MainWindow::on_saveButton_clicked()
     QMessageBox::information(this, tr("Success"), tr("Instructions saved successfully."));
 }
 
+void MainWindow::on_copyButton_clicked()
+{
+    int startVal = ui->startCopy->value() ;
+    int endVal = ui->endCopy->value() ;
+    std::cout << "copy button clicked: Start: " << startVal << " End: " << endVal <<std::endl;
+    for (int row = startVal; row < endVal; ++row) {
+    QTableWidgetItem *item = ui->instructionTable->item(row, 0);
+        std::cout << item << std::endl;
+    }
+}
+
+void MainWindow::on_pasteButton_clicked()
+{
+    int pasteVal = ui->pasteBox->value() ;
+    std::cout << "paste button clicked:" << pasteVal <<std::endl;
+}
 

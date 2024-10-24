@@ -22,6 +22,8 @@ public:
     void createLists();
     void pause();
     void enableInput();
+    void copy();
+    void paste();
     MainMemory mainMemory;
 
 
@@ -43,6 +45,10 @@ private slots:
     void on_loadButton_clicked();
 
     void on_saveButton_clicked();
+
+    void on_copyButton_clicked();
+
+    void on_pasteButton_clicked();
 
 private:
     Ui::MainWindow *ui;
