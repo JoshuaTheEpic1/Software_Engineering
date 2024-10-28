@@ -22,6 +22,7 @@ public:
     void createLists();
     void pause();
     void enableInput();
+    void toggleColor();
     MainMemory mainMemory;
 
 
@@ -43,6 +44,10 @@ private slots:
     void on_loadButton_clicked();
 
     void on_saveButton_clicked();
+
+    void on_customizeColor_clicked();
+
+    void on_confirmColor_clicked();
 
 private:
     Ui::MainWindow *ui;

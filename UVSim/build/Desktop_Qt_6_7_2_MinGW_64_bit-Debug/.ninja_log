@@ -1,0 +1,30 @@
+# ninja log v6
+963	3221	7518520199720156	CMakeFiles/UVSim.dir/UVSim_autogen/mocs_compilation.cpp.obj	4a087a83ca1ed06f
+1013	1740	7518512865110202	CMakeFiles/UVSim.dir/operations.cpp.obj	e9390cc14927ff9f
+1016	1745	7518512865140178	CMakeFiles/UVSim.dir/unittest.cpp.obj	200c6ed383027119
+32	214	7518552965934872	UVSim_autogen/timestamp	b54e3e134376020c
+32	214	7518552965934872	C:/Users/thesn/Documents/classes/CS2450/team project/Software_Engineering/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Debug/UVSim_autogen/mocs_compilation.cpp	b54e3e134376020c
+32	214	7518552965934872	UVSim_autogen/mocs_compilation.cpp	b54e3e134376020c
+215	3272	7518552967774911	CMakeFiles/UVSim.dir/mainwindow.cpp.obj	5ad5534a4cf83b4e
+32	214	7518552965934872	C:/Users/thesn/Documents/classes/CS2450/team project/Software_Engineering/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Debug/UVSim_autogen/timestamp	b54e3e134376020c
+1020	1736	7518512865180180	CMakeFiles/UVSim.dir/mainMemory.cpp.obj	bf65bbade6bb1909
+967	3371	7518520199770147	CMakeFiles/UVSim.dir/main.cpp.obj	f28cdb262034da04
+3272	3566	7518552998334881	UVSim.exe	2eb9aa5cdefb14f5
+40	234	7518556099884727	UVSim_autogen/timestamp	b54e3e134376020c
+40	234	7518556099884727	UVSim_autogen/mocs_compilation.cpp	b54e3e134376020c
+40	234	7518556099884727	C:/Users/thesn/Documents/classes/CS2450/team project/Software_Engineering/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Debug/UVSim_autogen/timestamp	b54e3e134376020c
+40	234	7518556099884727	C:/Users/thesn/Documents/classes/CS2450/team project/Software_Engineering/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Debug/UVSim_autogen/mocs_compilation.cpp	b54e3e134376020c
+235	3521	7518556101834739	CMakeFiles/UVSim.dir/mainwindow.cpp.obj	5ad5534a4cf83b4e
+3521	3821	7518556134684735	UVSim.exe	2eb9aa5cdefb14f5
+33	198	7518557310934717	UVSim_autogen/timestamp	b54e3e134376020c
+33	198	7518557310934717	UVSim_autogen/mocs_compilation.cpp	b54e3e134376020c
+33	198	7518557310934717	C:/Users/thesn/Documents/classes/CS2450/team project/Software_Engineering/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Debug/UVSim_autogen/timestamp	b54e3e134376020c
+33	198	7518557310934717	C:/Users/thesn/Documents/classes/CS2450/team project/Software_Engineering/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Debug/UVSim_autogen/mocs_compilation.cpp	b54e3e134376020c
+199	3577	7518557312594749	CMakeFiles/UVSim.dir/mainwindow.cpp.obj	5ad5534a4cf83b4e
+3577	3869	7518557346364747	UVSim.exe	2eb9aa5cdefb14f5
+38	212	7518559105874751	UVSim_autogen/timestamp	b54e3e134376020c
+38	212	7518559105874751	UVSim_autogen/mocs_compilation.cpp	b54e3e134376020c
+38	212	7518559105874751	C:/Users/thesn/Documents/classes/CS2450/team project/Software_Engineering/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Debug/UVSim_autogen/timestamp	b54e3e134376020c
+38	212	7518559105874751	C:/Users/thesn/Documents/classes/CS2450/team project/Software_Engineering/UVSim/build/Desktop_Qt_6_7_2_MinGW_64_bit-Debug/UVSim_autogen/mocs_compilation.cpp	b54e3e134376020c
+213	3523	7518559107624727	CMakeFiles/UVSim.dir/mainwindow.cpp.obj	5ad5534a4cf83b4e
+3523	3810	7518559140734750	UVSim.exe	2eb9aa5cdefb14f5

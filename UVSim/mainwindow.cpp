@@ -22,7 +22,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->memoryTable->setColumnCount(1);
     ui->instructionTable->setRowCount(100);
     ui->instructionTable->setColumnCount(1);
-
+    ui->redPrimary->setValidator( new QIntValidator(0, 100, this));
+    ui->bluePrimary->setValidator( new QIntValidator(0, 100, this));
+    ui->greenPrimary->setValidator( new QIntValidator(0, 100, this));
+    ui->greenSecondary->setValidator( new QIntValidator(0, 100, this));
+    ui->blueSecondary->setValidator( new QIntValidator(0, 100, this));
+    ui->redSecondary->setValidator( new QIntValidator(0, 100, this));
+    toggleColor();
 
 }
 void MainWindow::createLists(){
@@ -309,6 +315,88 @@ void MainWindow::on_saveButton_clicked()
 
     file.close();
     QMessageBox::information(this, tr("Success"), tr("Instructions saved successfully."));
+}
+
+
+
+void MainWindow::on_customizeColor_clicked()
+{
+    ui->customizeColor->hide();
+    toggleColor();
+
+}
+void MainWindow::toggleColor(){
+    ui->colorErrorText->hide();
+    if(ui->redPrimary->isHidden()){
+        ui->redPrimary->show();
+        ui->redSecondary->show();
+        ui->greenPrimary->show();
+        ui->greenSecondary->show();
+        ui->blueSecondary->show();
+        ui->bluePrimary->show();
+        ui->primaryText->show();
+        ui->secondaryText->show();
+        ui->confirmColor->show();
+    }
+    else{
+        ui->redPrimary->hide();
+        ui->redSecondary->hide();
+        ui->greenPrimary->hide();
+        ui->greenSecondary->hide();
+        ui->blueSecondary->hide();
+        ui->bluePrimary->hide();
+        ui->primaryText->hide();
+        ui->secondaryText->hide();
+        ui->confirmColor->hide();
+    }
+
+}
+
+void MainWindow::on_confirmColor_clicked()
+{
+    int red;
+    int green;
+    int blue;
+    std::stringstream s;
+    ui->customizeColor->show();
+    toggleColor();
+    if(ui->redPrimary->text() != "" && ui->bluePrimary->text() != "" && ui->greenPrimary->text() != ""){
+        red = ui->redPrimary->text().toInt();
+        green = ui->greenPrimary->text().toInt();
+        blue = ui->bluePrimary->text().toInt();
+
+        if(red > 255 || red < 0 || blue > 255 || blue < 0 || green > 255 || green < 0){
+            ui->colorErrorText->show();
+
+        }
+        else{
+        s << "background-color: rgb(" << red << ","<< green << "," << blue << ")";
+        ui->centralwidget->setStyleSheet(QString::fromStdString(s.str()));
+        }
+    }
+    if(ui->redSecondary->text() != "" && ui->blueSecondary->text() != "" && ui->greenSecondary->text() != ""){
+        red = ui->redSecondary->text().toInt();
+        green = ui->greenSecondary->text().toInt();
+        blue = ui->blueSecondary->text().toInt();
+        if(red > 255 || red < 0 || blue > 255 || blue < 0 || green > 255 || green < 0){
+            ui->colorErrorText->show();
+        }
+        else{
+            s.str("");
+            s << "background-color: rgb(" << red << ","<< green << "," << blue << ")";
+            ui->confirmColor->setStyleSheet(QString::fromStdString(s.str()));
+            ui->customizeColor->setStyleSheet(QString::fromStdString(s.str()));
+            ui->inputButton->setStyleSheet(QString::fromStdString(s.str()));
+            ui->loadButton->setStyleSheet(QString::fromStdString(s.str()));
+            ui->saveButton->setStyleSheet(QString::fromStdString(s.str()));
+            ui->resetButton->setStyleSheet(QString::fromStdString(s.str()));
+            ui->unPauseButton->setStyleSheet(QString::fromStdString(s.str()));
+            ui->runAllInstructionButtons->setStyleSheet(QString::fromStdString(s.str()));
+            ui->runInstructionButton->setStyleSheet(QString::fromStdString(s.str()));
+        }
+    }
+
+
 }
 
 
