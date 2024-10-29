@@ -68,7 +68,7 @@ BRANCHNEG = 4192 Branch to memory location 92 if the accumulator is negative.
 BRANCHZERO = 4252 Branch to memory location 52 if the accumulator is zero.
 HALT = 43XX Pauses the program.  The memory location does not change anything.
 ## Using the GUI
-<img src="https://i.imgur.com/BintgIp.png" width="800" height="632"/><br>
+<img src="https://i.imgur.com/fuumqp7.png" width="800" height="632"/><br>
 ## Building
 You can download the most recent release [here](https://github.com/JoshuaTheEpic1/Software_Engineering/releases).<br> 
-You can build UVSim on your own by using the Qt program you can grab it [here](https://www.qt.io/download-dev).
+You can build UVSim using the Qt program, which you can grab [here](https://www.qt.io/download-dev).
