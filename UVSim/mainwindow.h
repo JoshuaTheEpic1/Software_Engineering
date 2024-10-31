@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include "mainMemory.h"
+#include <QKeyEvent>
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -24,8 +26,17 @@ public:
     void enableInput();
     void toggleColor();
     MainMemory mainMemory;
-
-
+    void paste();
+    void copy();
+protected:
+    void keyPressEvent(QKeyEvent *event) override{
+        if(event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_V){
+            paste();
+        }
+        if(event->modifiers() == Qt::ControlModifier && event->key() == Qt::Key_C){
+            copy();
+        }
+    }
 private slots:
     void on_runInstructionButton_clicked();
 

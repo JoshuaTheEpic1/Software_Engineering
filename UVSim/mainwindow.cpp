@@ -8,6 +8,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "operations.h"
+#include <QClipboard>
 
 
 int countingTemp = 0;
@@ -326,6 +327,7 @@ void MainWindow::on_customizeColor_clicked()
 
 }
 void MainWindow::toggleColor(){
+    QClipboard* clipboard = QApplication::clipboard();
     ui->colorErrorText->hide();
     if(ui->redPrimary->isHidden()){
         ui->redPrimary->show();
@@ -396,7 +398,26 @@ void MainWindow::on_confirmColor_clicked()
         }
     }
 
+}
 
+void MainWindow::paste(){
+    //clip board copy/paste testing to help josh
+    QString temp = QApplication::clipboard()->text(); // grabs the text from the clipboard (what ever is copied on your computer)
+    QStringList lines = temp.split("\n", Qt::SkipEmptyParts); // creates a list from the clipboard each list element is what was seperated by a new line
+    stringstream temp2; // a string you can put the lines into for testing
+    for(int i = 0; i < lines.size(); i++){   // a for loop that goes through each element in the list
+        temp2 << lines[i].toStdString() << "\n"; // puts the element into the test string above and adds a new line after converting it to standard string
+        std::cout << lines[i].toStdString() << endl; // outputs the element [i] to the clipboard as a standard string instead of QString
+    }
+    temp2 << "hello hello" << endl; // added to test setting to clip board
+    QApplication::clipboard()->setText(QString::fromStdString(temp2.str())); // this will set the clipboard with the text you want to have copied in this case original + hello hello
+
+    std::cout << "paste pressed" << std::endl;
+
+}
+
+void MainWindow::copy(){
+    std::cout << "copied pressed" << std::endl;
 }
 
 
