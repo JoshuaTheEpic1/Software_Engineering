@@ -14,6 +14,7 @@ class MainMemory{
         void setAccumulator(int value){this->accumulator = value;}
         std::vector<int> getMemoryList(){return this->mainMemory;} // returns the entire vector
 
+
     private:
         std::vector<int> mainMemory;
         int currMemLoc = 0; // tracks location of what memory slot the program is at.

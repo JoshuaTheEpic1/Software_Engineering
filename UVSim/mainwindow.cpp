@@ -8,6 +8,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "operations.h"
+#include <QClipboard>
 
 
 int countingTemp = 0;
@@ -22,7 +23,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->memoryTable->setColumnCount(1);
     ui->instructionTable->setRowCount(100);
     ui->instructionTable->setColumnCount(1);
-
+    ui->redPrimary->setValidator( new QIntValidator(0, 100, this));
+    ui->bluePrimary->setValidator( new QIntValidator(0, 100, this));
+    ui->greenPrimary->setValidator( new QIntValidator(0, 100, this));
+    ui->greenSecondary->setValidator( new QIntValidator(0, 100, this));
+    ui->blueSecondary->setValidator( new QIntValidator(0, 100, this));
+    ui->redSecondary->setValidator( new QIntValidator(0, 100, this));
+    toggleColor();
 
 }
 void MainWindow::createLists(){
@@ -327,4 +334,106 @@ void MainWindow::on_pasteButton_clicked()
     int pasteVal = ui->pasteBox->value() ;
     std::cout << "paste button clicked:" << pasteVal <<std::endl;
 }
+
+
+void MainWindow::on_customizeColor_clicked()
+{
+    ui->customizeColor->hide();
+    toggleColor();
+
+}
+void MainWindow::toggleColor(){
+    QClipboard* clipboard = QApplication::clipboard();
+    ui->colorErrorText->hide();
+    if(ui->redPrimary->isHidden()){
+        ui->redPrimary->show();
+        ui->redSecondary->show();
+        ui->greenPrimary->show();
+        ui->greenSecondary->show();
+        ui->blueSecondary->show();
+        ui->bluePrimary->show();
+        ui->primaryText->show();
+        ui->secondaryText->show();
+        ui->confirmColor->show();
+    }
+    else{
+        ui->redPrimary->hide();
+        ui->redSecondary->hide();
+        ui->greenPrimary->hide();
+        ui->greenSecondary->hide();
+        ui->blueSecondary->hide();
+        ui->bluePrimary->hide();
+        ui->primaryText->hide();
+        ui->secondaryText->hide();
+        ui->confirmColor->hide();
+    }
+
+}
+
+void MainWindow::on_confirmColor_clicked()
+{
+    int red;
+    int green;
+    int blue;
+    std::stringstream s;
+    ui->customizeColor->show();
+    toggleColor();
+    if(ui->redPrimary->text() != "" && ui->bluePrimary->text() != "" && ui->greenPrimary->text() != ""){
+        red = ui->redPrimary->text().toInt();
+        green = ui->greenPrimary->text().toInt();
+        blue = ui->bluePrimary->text().toInt();
+
+        if(red > 255 || red < 0 || blue > 255 || blue < 0 || green > 255 || green < 0){
+            ui->colorErrorText->show();
+
+        }
+        else{
+        s << "background-color: rgb(" << red << ","<< green << "," << blue << ")";
+        ui->centralwidget->setStyleSheet(QString::fromStdString(s.str()));
+        }
+    }
+    if(ui->redSecondary->text() != "" && ui->blueSecondary->text() != "" && ui->greenSecondary->text() != ""){
+        red = ui->redSecondary->text().toInt();
+        green = ui->greenSecondary->text().toInt();
+        blue = ui->blueSecondary->text().toInt();
+        if(red > 255 || red < 0 || blue > 255 || blue < 0 || green > 255 || green < 0){
+            ui->colorErrorText->show();
+        }
+        else{
+            s.str("");
+            s << "background-color: rgb(" << red << ","<< green << "," << blue << ")";
+            ui->confirmColor->setStyleSheet(QString::fromStdString(s.str()));
+            ui->customizeColor->setStyleSheet(QString::fromStdString(s.str()));
+            ui->inputButton->setStyleSheet(QString::fromStdString(s.str()));
+            ui->loadButton->setStyleSheet(QString::fromStdString(s.str()));
+            ui->saveButton->setStyleSheet(QString::fromStdString(s.str()));
+            ui->resetButton->setStyleSheet(QString::fromStdString(s.str()));
+            ui->unPauseButton->setStyleSheet(QString::fromStdString(s.str()));
+            ui->runAllInstructionButtons->setStyleSheet(QString::fromStdString(s.str()));
+            ui->runInstructionButton->setStyleSheet(QString::fromStdString(s.str()));
+        }
+    }
+
+}
+
+void MainWindow::paste(){
+    //clip board copy/paste testing to help josh
+    QString temp = QApplication::clipboard()->text(); // grabs the text from the clipboard (what ever is copied on your computer)
+    QStringList lines = temp.split("\n", Qt::SkipEmptyParts); // creates a list from the clipboard each list element is what was seperated by a new line
+    stringstream temp2; // a string you can put the lines into for testing
+    for(int i = 0; i < lines.size(); i++){   // a for loop that goes through each element in the list
+        temp2 << lines[i].toStdString() << "\n"; // puts the element into the test string above and adds a new line after converting it to standard string
+        std::cout << lines[i].toStdString() << endl; // outputs the element [i] to the clipboard as a standard string instead of QString
+    }
+    temp2 << "hello hello" << endl; // added to test setting to clip board
+    QApplication::clipboard()->setText(QString::fromStdString(temp2.str())); // this will set the clipboard with the text you want to have copied in this case original + hello hello
+
+    std::cout << "paste pressed" << std::endl;
+
+}
+
+void MainWindow::copy(){
+    std::cout << "copied pressed" << std::endl;
+}
+
 
