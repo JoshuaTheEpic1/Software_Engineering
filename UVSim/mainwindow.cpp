@@ -412,9 +412,18 @@ void MainWindow::paste(){
     temp2 << "hello hello" << endl; // added to test setting to clip board
     QApplication::clipboard()->setText(QString::fromStdString(temp2.str())); // this will set the clipboard with the text you want to have copied in this case original + hello hello
 
-    std::cout << "paste pressed" << std::endl;
 
-}
+    int rowNumber = 0;
+    auto rowList = ui->instructionTable->selectionModel()->selectedRows();
+    if(rowList.count() > 0){
+        rowNumber = rowList.constFirst().row();
+    }
+    std::cout << "paste pressed" << std::endl;
+    for(int i = 0; i < lines.size(); i++){
+           ui->instructionTable->setItem(i,rowNumber,new QTableWidgetItem(lines[i])); // the int sets where the paste starts.  Change it to where the user has selected.
+        }
+    }
+
 
 void MainWindow::copy(){
     std::cout << "copied pressed" << std::endl;
