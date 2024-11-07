@@ -57,13 +57,11 @@ int WRITE(int instructMemLoc,  MainMemory* mainMemory) {
 
 void DIVIDE(MainMemory* mainMemory, int instructMemLoc) {
     int divisor = mainMemory->getValueAt(instructMemLoc);
-    cout << mainMemory->getAccumulator() << " / " << divisor << endl;
     if (divisor == 0) cout << "Divide by zero error" << endl;
     else mainMemory->setAccumulator(mainMemory->getAccumulator() / divisor);
 }
 
 void MULTIPLY(MainMemory* mainMemory, int instructMemLoc) {
-    cout << mainMemory->getAccumulator() << " * " << mainMemory->getValueAt(instructMemLoc) << endl;
     mainMemory->setAccumulator(mainMemory->getAccumulator() * mainMemory->getValueAt(instructMemLoc));
 }
 
