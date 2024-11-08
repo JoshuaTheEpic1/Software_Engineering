@@ -6,6 +6,7 @@
 #include <vector>
 #include "mainMemory.h"
 #include <QKeyEvent>
+#include "instructions.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,6 +27,9 @@ public:
     void enableInput();
     void toggleColor();
     MainMemory mainMemory;
+    MainMemory mainMemoryFile1;
+    MainMemory mainMemoryFile2;
+    MainMemory mainMemoryFile3;
     void paste();
     void copy();
 protected:
@@ -60,12 +64,31 @@ private slots:
 
     void on_confirmColor_clicked();
 
+    void on_file1Button_clicked();
+
+    void on_file2Button_clicked();
+
+    void on_file3Button_clicked();
+
+    void setMemoryAndInstructions(Instructions* instruct,MainMemory* memory);
+
+    void saveToClass(Instructions *instruct,MainMemory *memory);
+
+    void disableFileButtons();
+
+    void enableFileButtons();
+    void on_defaultColors_clicked();
+
 private:
     Ui::MainWindow *ui;
-    int memoryLocation = 0;
+    Instructions instructionsFile1;
+    Instructions instructionsFile2;
+    Instructions instructionsFile3;
     std::vector<std::string> instructions;
     std::vector<int> instructMemoryLocations;
     int instructionMemoryLocation = 0;
     bool waitingForInputFromAll = false;
+    bool fourDigitInput = false;
+    bool sixDigitInput = false;
 };
 #endif // MAINWINDOW_H

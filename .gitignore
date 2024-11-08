@@ -43,6 +43,7 @@ Thumbs.db
 *.pro.user*
 CMakeLists.txt.user*
 /UVSim/CMakeLists.txt.user*
+/UVSim/Build/*
 
 # xemacs temporary files
 *.flc

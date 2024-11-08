@@ -29,6 +29,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         mainMemory.cpp
         mainMemory.h
+        instructions.h instructions.cpp
 
 
     )
