@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 #include <sstream>
 #include <QFileDialog>
 #include <QFile>
@@ -11,7 +12,7 @@
 #include <QClipboard>
 
 
-int countingTemp = 0;
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -19,9 +20,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     ui->setupUi(this);
-    ui->memoryTable->setRowCount(100);
+    ui->memoryTable->setRowCount(this->mainMemory.getMemoryList().size());
     ui->memoryTable->setColumnCount(1);
-    ui->instructionTable->setRowCount(100);
+    ui->instructionTable->setRowCount(this->mainMemory.getMemoryList().size());
     ui->instructionTable->setColumnCount(1);
     ui->redPrimary->setValidator( new QIntValidator(0, 100, this));
     ui->bluePrimary->setValidator( new QIntValidator(0, 100, this));
@@ -29,21 +30,30 @@ MainWindow::MainWindow(QWidget *parent)
     ui->greenSecondary->setValidator( new QIntValidator(0, 100, this));
     ui->blueSecondary->setValidator( new QIntValidator(0, 100, this));
     ui->redSecondary->setValidator( new QIntValidator(0, 100, this));
+    ui->file1Button->setEnabled(false);
+    ui->file2ButtonBorder->hide();
+    ui->file3ButtonBorder->hide();
+    ui->haltedText->hide();
+    ui->defaultColors->hide();
     toggleColor();
 
 }
 void MainWindow::createLists(){
     std::ostringstream temp;
-    ui->memoryTable->setHorizontalHeaderItem(0, new QTableWidgetItem("Memory"));
-    ui->instructionTable->setHorizontalHeaderItem(0, new QTableWidgetItem("Instructions"));
-    this->instructions.resize(100);
-    this->instructMemoryLocations.resize(100);
-    for(int i=0; i < 100; i++){
+
+    ui->memoryTable->setHorizontalHeaderItem(0, new QTableWidgetItem("memory"));
+    ui->instructionTable->setHorizontalHeaderItem(0,  new QTableWidgetItem("Instructions"));
+    this->instructions.resize(this->mainMemory.getMemoryList().size());
+    this->instructMemoryLocations.resize(this->mainMemory.getMemoryList().size());
+    for(int i=0; i < this->mainMemory.getMemoryList().size(); i++){
+
         if(i < 10){
 
             temp.str("");
             temp << "0" << i;
             ui->memoryTable->setVerticalHeaderItem(i, new QTableWidgetItem(QString::fromStdString(temp.str())));
+
+
         }
         else{
             temp.str("");
@@ -52,6 +62,7 @@ void MainWindow::createLists(){
         }
         ui->memoryTable->setItem(i,0,new QTableWidgetItem("0"));
         ui->instructionTable->setItem(i,0,new QTableWidgetItem(""));
+
     }
     ui->memoryTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
@@ -71,22 +82,45 @@ void MainWindow::on_runInstructionButton_clicked()
         std::ostringstream instructionText;
         QTableWidgetItem *temp = ui->instructionTable->item(this->mainMemory.getMemoryLocation(),0);
         if(temp->text().length() >= 5 && (temp->text().at(0) == QString::fromStdString("+") || temp->text().at(0) == QString::fromStdString("-"))){
-            for(int j = 0; j < 3; j++){
-                QString qTemp = temp->text().at(j);
-                instructionText << qTemp.toStdString();
-                if(j<2){
-                    QString qTemp = temp->text().at(j+3);
-                    memoryLocationText << qTemp.toStdString();
+            if(this->fourDigitInput == false && this->sixDigitInput == false){
+                if(temp->text().length() == 5){
+                    this->fourDigitInput = true;
+                }else if(temp->text().length() == 7){
+                    this->sixDigitInput = true;
                 }
             }
-            std::cout << instructionText.str() << std::endl;
-            std::cout << memoryLocationText.str() << std::endl;
+            if(temp->text().length() == 5 && fourDigitInput == true){
+                for(int j = 0; j < 3; j++){
+                    QString qTemp = temp->text().at(j);
+                    instructionText << qTemp.toStdString();
+                    if(j<2){
+                        QString qTemp = temp->text().at(j+3);
+                        memoryLocationText << qTemp.toStdString();
+                    }
+                }
+            }else if(temp->text().length() == 7 && sixDigitInput == true){
+                for(int j = 0; j < 4; j++){
+                    QString qTemp = temp->text().at(j);
+                    instructionText << qTemp.toStdString();
+                    if(j<=2){
+                        QString qTemp = temp->text().at(j+4);
+                        memoryLocationText << qTemp.toStdString();
+                    }
+                }
+            }
+            else{
+            this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation()+1);
+            }
             try{
                 int instructionInt = std::stoi(instructionText.str());
                 int memoryLocationInt = std::stoi(memoryLocationText.str());
+                if(memoryLocationInt > 249){
+                    throw std::out_of_range("Main memory is too large");
+                }
                 if(instructionInt == 10 || instructionInt == -10){
                     ui->textInput->setPlaceholderText("Please type a number");
                     this->instructionMemoryLocation = memoryLocationInt;
+                    disableFileButtons();
                     this->enableInput();
                     this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation() + 1);
                 }
@@ -107,6 +141,7 @@ void MainWindow::on_runInstructionButton_clicked()
             }
             catch(...){
                 temp->setBackground(QColor::fromRgb(255,0,0));
+                this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation() + 1);
 
             }
         }
@@ -127,6 +162,7 @@ void MainWindow::on_runInstructionButton_clicked()
 void MainWindow::on_inputButton_clicked()
 {
     try{
+        enableFileButtons();
         QString tempStr = ui->textInput->toPlainText();
         int temp = std::stoi(ui->textInput->toPlainText().toStdString());
         READ(this->instructionMemoryLocation,&this->mainMemory,temp);
@@ -153,25 +189,52 @@ void MainWindow::on_inputButton_clicked()
 void MainWindow::on_runAllInstructionButtons_clicked()
 {
     this->waitingForInputFromAll = false;
-    for(int i = this->mainMemory.getMemoryLocation(); i < this->mainMemory.getMemoryList().size() && this->mainMemory.getMemoryLocation() <100; i++){
+
+    for(int i = this->mainMemory.getMemoryLocation(); i < this->mainMemory.getMemoryList().size() && this->mainMemory.getMemoryLocation() < this->mainMemory.getMemoryList().size(); i++){
         std::ostringstream memoryLocationText;
         std::ostringstream instructionText;
         QTableWidgetItem *temp = ui->instructionTable->item(i,0);
+
         if(temp->text().length() >= 5 && (temp->text().at(0) == QString::fromStdString("+") || temp->text().at(0) == QString::fromStdString("-"))){
-            for(int j = 0; j < 3; j++){
-                QString qTemp = temp->text().at(j);
-                instructionText << qTemp.toStdString();
-                if(j<2){
-                    QString qTemp = temp->text().at(j+3);
-                    memoryLocationText << qTemp.toStdString();
+            if(this->fourDigitInput == false && this->sixDigitInput == false){
+                if(temp->text().length() == 5){
+                    this->fourDigitInput = true;
+                }else if(temp->text().length() == 7){
+                    this->sixDigitInput = true;
                 }
+            }
+            if(temp->text().length() == 5 && fourDigitInput == true){
+                for(int j = 0; j < 3; j++){
+                    QString qTemp = temp->text().at(j);
+                    instructionText << qTemp.toStdString();
+                     if(j<2){
+                        QString qTemp = temp->text().at(j+3);
+                        memoryLocationText << qTemp.toStdString();
+                    }
+                }
+            }else if(temp->text().length() == 7 && sixDigitInput == true){
+                for(int j = 0; j < 4; j++){
+                    QString qTemp = temp->text().at(j);
+                    instructionText << qTemp.toStdString();
+                    if(j<=2){
+                        QString qTemp = temp->text().at(j+4);
+                        memoryLocationText << qTemp.toStdString();
+                    }
+                }
+            }
+            else{
+                this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation()+1);
             }
             try{
                 int instructionInt = std::stoi(instructionText.str());
                 int memoryLocationInt = std::stoi(memoryLocationText.str());
+                if(memoryLocationInt > 249){
+                    throw std::out_of_range("Main memory is too large");
+                }
                 if(instructionInt == 43 || instructionInt == -43){
                     this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation() + 1);
                     ui->instructionTable->selectRow(i);
+                    temp->setBackground(QColor::fromRgb(3,223,252));
                     pause();
                     break;
                 }
@@ -180,6 +243,7 @@ void MainWindow::on_runAllInstructionButtons_clicked()
                     this->waitingForInputFromAll = true;
                     this->instructionMemoryLocation = memoryLocationInt;
                     this->enableInput();
+                    disableFileButtons();
                     this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation() + 1);
                     temp->setBackground(QColor::fromRgb(3,223,252));
                     ui->instructionTable->selectRow(i);
@@ -205,15 +269,16 @@ void MainWindow::on_runAllInstructionButtons_clicked()
         }
         ui->instructionTable->selectRow(i);
         ui->accumulatorInt->setText(QString::fromStdString(std::to_string(this->mainMemory.getAccumulator())));
-
     }
 
 }
 
 void MainWindow::pause(){
+    ui->haltedText->show();
     ui->runAllInstructionButtons->setEnabled(false);
     ui->runInstructionButton->setEnabled(false);
     ui->unPauseButton->setEnabled(true);
+
 
 }
 void MainWindow::enableInput(){
@@ -227,9 +292,10 @@ void MainWindow::enableInput(){
 
 void MainWindow::on_unPauseButton_clicked()
 {
-
+    ui->haltedText->hide();
     ui->unPauseButton->setEnabled(false);
     on_runAllInstructionButtons_clicked();
+
 }
 
 
@@ -270,7 +336,7 @@ void MainWindow::on_loadButton_clicked()
     int row = 0;
 
     // Read the file line by line
-    while (!in.atEnd() && row < 100) {
+    while (!in.atEnd() && row < this->mainMemory.getMemoryList().size()) {
         line = in.readLine();
         
         // Validate the instruction format, automatically skipping invalidly formatted instructions
@@ -304,7 +370,7 @@ void MainWindow::on_saveButton_clicked()
     QTextStream out(&file);
 
     // Iterate through the instructionTable and write each instruction to the file
-    for (int row = 0; row < 100; ++row) {
+    for (int row = 0; row < this->mainMemory.getMemoryList().size(); ++row) {
         QTableWidgetItem *item = ui->instructionTable->item(row, 0);
         if (item) {
             QString instruction = item->text();
@@ -327,7 +393,6 @@ void MainWindow::on_customizeColor_clicked()
 
 }
 void MainWindow::toggleColor(){
-    QClipboard* clipboard = QApplication::clipboard();
     ui->colorErrorText->hide();
     if(ui->redPrimary->isHidden()){
         ui->redPrimary->show();
@@ -339,6 +404,7 @@ void MainWindow::toggleColor(){
         ui->primaryText->show();
         ui->secondaryText->show();
         ui->confirmColor->show();
+        ui->defaultColors->show();
     }
     else{
         ui->redPrimary->hide();
@@ -350,6 +416,7 @@ void MainWindow::toggleColor(){
         ui->primaryText->hide();
         ui->secondaryText->hide();
         ui->confirmColor->hide();
+        ui->defaultColors->hide();
     }
 
 }
@@ -372,7 +439,7 @@ void MainWindow::on_confirmColor_clicked()
 
         }
         else{
-        s << "background-color: rgb(" << red << ","<< green << "," << blue << ")";
+        s << "background-color: rgb(" << red << ","<< green << "," << blue << ");";
         ui->centralwidget->setStyleSheet(QString::fromStdString(s.str()));
         }
     }
@@ -385,7 +452,7 @@ void MainWindow::on_confirmColor_clicked()
         }
         else{
             s.str("");
-            s << "background-color: rgb(" << red << ","<< green << "," << blue << ")";
+            s << "background-color: rgb(" << red << ","<< green << "," << blue << ");" << "\n color: rgb(0,0,0);";
             ui->confirmColor->setStyleSheet(QString::fromStdString(s.str()));
             ui->customizeColor->setStyleSheet(QString::fromStdString(s.str()));
             ui->inputButton->setStyleSheet(QString::fromStdString(s.str()));
@@ -395,6 +462,10 @@ void MainWindow::on_confirmColor_clicked()
             ui->unPauseButton->setStyleSheet(QString::fromStdString(s.str()));
             ui->runAllInstructionButtons->setStyleSheet(QString::fromStdString(s.str()));
             ui->runInstructionButton->setStyleSheet(QString::fromStdString(s.str()));
+            ui->file1Button->setStyleSheet(QString::fromStdString(s.str()));
+            ui->file2Button->setStyleSheet(QString::fromStdString(s.str()));
+            ui->file3Button->setStyleSheet(QString::fromStdString(s.str()));
+            ui->defaultColors->setStyleSheet(QString::fromStdString(s.str()));
         }
     }
 
@@ -429,4 +500,167 @@ void MainWindow::copy(){
     std::cout << "copied pressed" << std::endl;
 }
 
+
+
+void MainWindow::on_file1Button_clicked()
+{
+    ui->file1Button->setEnabled(false);
+    ui->file1ButtonBorder->setHidden(false);
+    if(ui->file2Button->isEnabled() == false){    // if button two isn't enabled it enables it
+        ui->file2Button->setEnabled(true);
+        ui->file2ButtonBorder->setHidden(true);
+        saveToClass(&this->instructionsFile2, &this->mainMemoryFile2);
+
+    }
+    if(ui->file3Button->isEnabled() == false){
+        ui->file3Button->setEnabled(true);
+        ui->file3ButtonBorder->setHidden(true);
+        saveToClass(&this->instructionsFile3,&this->mainMemoryFile3);
+    }
+    setMemoryAndInstructions(&instructionsFile1,&mainMemoryFile1);
+}
+
+
+void MainWindow::on_file2Button_clicked()
+{
+    ui->file2Button->setEnabled(false);
+    ui->file2ButtonBorder->setHidden(false);
+    if(ui->file1Button->isEnabled() == false){    // if button two isn't enabled it enables it
+        ui->file1Button->setEnabled(true);
+        ui->file1ButtonBorder->setHidden(true);
+        saveToClass(&this->instructionsFile1, &this->mainMemoryFile1);
+
+    }
+    if(ui->file3Button->isEnabled() == false){
+        ui->file3Button->setEnabled(true);
+        ui->file3ButtonBorder->setHidden(true);
+        saveToClass(&this->instructionsFile3,&this->mainMemoryFile3);
+    }
+    setMemoryAndInstructions(&instructionsFile2,&mainMemoryFile2);
+}
+
+
+void MainWindow::on_file3Button_clicked()
+{
+    ui->file3Button->setEnabled(false);
+    ui->file3ButtonBorder->setHidden(false);
+    if(ui->file2Button->isEnabled() == false){    // if button two isn't enabled it enables it
+        ui->file2Button->setEnabled(true);
+        ui->file2ButtonBorder->setHidden(true);
+        saveToClass(&this->instructionsFile2, &this->mainMemoryFile2);
+
+    }
+    if(ui->file1Button->isEnabled() == false){
+        ui->file1Button->setEnabled(true);
+        ui->file1ButtonBorder->setHidden(true);
+        saveToClass(&this->instructionsFile1, &this->mainMemoryFile1);
+    }
+    setMemoryAndInstructions(&instructionsFile3,&mainMemoryFile3);
+}
+
+void MainWindow::setMemoryAndInstructions(Instructions* instruct,MainMemory* memory){
+    if(instruct->fourDigitInput == true){
+        this->fourDigitInput = true;
+    }
+    if(instruct->sixDigitInput == true){
+        this->sixDigitInput = true;
+    }
+    if(ui->unPauseButton->isEnabled()){
+        ui->haltedText->hide();
+        ui->unPauseButton->setEnabled(false);
+        ui->runAllInstructionButtons->setEnabled(true);
+        ui->runInstructionButton->setEnabled(true);
+    }
+    this->mainMemory.setAll(memory->getMemoryList(),memory->getMemoryLocation(),memory->getAccumulator());
+    ui->accumulatorInt->setText(QString::number(this->mainMemory.getAccumulator()));
+    for(int i = 0; i < instruct->getFullInstructionTable().size(); i++){
+        QTableWidgetItem *temp = ui->instructionTable->item(i,0);
+        QTableWidgetItem *temp2 = ui->memoryTable->item(i,0);
+        temp->setText(instruct->getFullInstructionTable().at(i));
+        temp2->setText(QString::number(memory->getValueAt(i)));
+        if(i > this->mainMemory.getMemoryLocation()){
+            temp->setBackground(QColorConstants::White);
+        }else if(i < this->mainMemory.getMemoryLocation()){
+            if(temp->text().length() == 5 && this->sixDigitInput == true){
+                temp->setBackground(QColor::fromRgb(3,223,252));
+            }
+            else if(temp->text().length() == 7 && this->sixDigitInput == true){
+                temp->setBackground(QColor::fromRgb(3,223,252));
+            }
+            else{
+                temp->setBackground(QColor::fromRgb(154, 154, 154));
+            }
+        }
+
+
+    }
+    if(this->mainMemory.getMemoryLocation() > 0){
+        this->ui->instructionTable->selectRow(this->mainMemory.getMemoryLocation()-1);
+    }else{
+        this->ui->instructionTable->selectRow(this->mainMemory.getMemoryLocation());
+    }
+
+
+}
+void MainWindow::saveToClass(Instructions *instruct,MainMemory *memory){
+    if(this->fourDigitInput == true){
+        instruct->fourDigitInput = true;
+    }
+    if(this->sixDigitInput == true){
+        instruct->sixDigitInput = true;
+    }
+    memory->setAll(this->mainMemory.getMemoryList(),this->mainMemory.getMemoryLocation(),this->mainMemory.getAccumulator());
+    for(int i = 0; i < instruct->getFullInstructionTable().size(); i++){
+        QTableWidgetItem *temp = ui->instructionTable->item(i,0);
+        instruct->setInstruction(i,temp->text());
+    }
+
+}
+void MainWindow::disableFileButtons(){
+    if(ui->file1ButtonBorder->isHidden()){
+            ui->file1Button->setEnabled(false);
+    }
+    if(ui->file2ButtonBorder->isHidden()){
+            ui->file2Button->setEnabled(false);
+
+    }
+    if(ui->file3ButtonBorder->isHidden()){
+            ui->file3Button->setEnabled(false);
+    }
+}
+
+void MainWindow::enableFileButtons(){
+    if(ui->file1ButtonBorder->isHidden()){
+            ui->file1Button->setEnabled(true);
+    }
+    if(ui->file2ButtonBorder->isHidden()){
+            ui->file2Button->setEnabled(true);
+    }
+    if(ui->file3ButtonBorder->isHidden()){
+            ui->file3Button->setEnabled(true);
+    }
+}
+
+void MainWindow::on_defaultColors_clicked()
+{
+
+    ui->centralwidget->setStyleSheet("background-color: rgb(76, 114, 29);");
+    ui->confirmColor->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
+    ui->customizeColor->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->inputButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->loadButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->saveButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->resetButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->unPauseButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->runAllInstructionButtons->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->runInstructionButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->file1Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->file2Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->file3Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->defaultColors->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    toggleColor();
+
+
+
+}
 

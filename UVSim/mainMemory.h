@@ -13,6 +13,7 @@ class MainMemory{
         int getAccumulator(){return this->accumulator;}
         void setAccumulator(int value){this->accumulator = value;}
         std::vector<int> getMemoryList(){return this->mainMemory;} // returns the entire vector
+        void setAll(std::vector<int> memory, int currMemLoc, int accumulator);
 
 
     private:
