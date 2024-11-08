@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->memoryTable->setColumnCount(1);
     ui->instructionTable->setRowCount(this->mainMemory.getMemoryList().size());
     ui->instructionTable->setColumnCount(1);
-    ui->redPrimary->setValidator( new QIntValidator(0, 100, this));
+    ui->redPrimary->setValidator( new QIntValidator(0, 100, this)); // only allows numbers in the rgb fields.
     ui->bluePrimary->setValidator( new QIntValidator(0, 100, this));
     ui->greenPrimary->setValidator( new QIntValidator(0, 100, this));
     ui->greenSecondary->setValidator( new QIntValidator(0, 100, this));
@@ -81,7 +81,7 @@ void MainWindow::on_runInstructionButton_clicked()
         std::ostringstream memoryLocationText;
         std::ostringstream instructionText;
         QTableWidgetItem *temp = ui->instructionTable->item(this->mainMemory.getMemoryLocation(),0);
-        if(temp->text().length() >= 5 && (temp->text().at(0) == QString::fromStdString("+") || temp->text().at(0) == QString::fromStdString("-"))){
+        if(temp->text().length() >= 5 && (temp->text().at(0) == QString::fromStdString("+") || temp->text().at(0) == QString::fromStdString("-"))){ // very simple validation.
             if(this->fourDigitInput == false && this->sixDigitInput == false){
                 if(temp->text().length() == 5){
                     this->fourDigitInput = true;
@@ -114,7 +114,7 @@ void MainWindow::on_runInstructionButton_clicked()
             try{
                 int instructionInt = std::stoi(instructionText.str());
                 int memoryLocationInt = std::stoi(memoryLocationText.str());
-                if(memoryLocationInt > 249){
+                if(memoryLocationInt > this->mainMemory.getMemoryList().size()){
                     throw std::out_of_range("Main memory is too large");
                 }
                 if(instructionInt == 10 || instructionInt == -10){
@@ -194,8 +194,10 @@ void MainWindow::on_runAllInstructionButtons_clicked()
         std::ostringstream memoryLocationText;
         std::ostringstream instructionText;
         QTableWidgetItem *temp = ui->instructionTable->item(i,0);
-
-        if(temp->text().length() >= 5 && (temp->text().at(0) == QString::fromStdString("+") || temp->text().at(0) == QString::fromStdString("-"))){
+        if(temp->text().length() == 0){ // if the cell is empty stops trying to execute. No more running to the end with blank cells.
+            break;
+        }
+        if(temp->text().length() >= 5 && (temp->text().at(0) == QString::fromStdString("+") || temp->text().at(0) == QString::fromStdString("-"))){ // very simple validation.
             if(this->fourDigitInput == false && this->sixDigitInput == false){
                 if(temp->text().length() == 5){
                     this->fourDigitInput = true;
@@ -228,7 +230,7 @@ void MainWindow::on_runAllInstructionButtons_clicked()
             try{
                 int instructionInt = std::stoi(instructionText.str());
                 int memoryLocationInt = std::stoi(memoryLocationText.str());
-                if(memoryLocationInt > 249){
+                if(memoryLocationInt >= this->mainMemory.getMemoryList().size()){
                     throw std::out_of_range("Main memory is too large");
                 }
                 if(instructionInt == 43 || instructionInt == -43){
@@ -286,6 +288,7 @@ void MainWindow::enableInput(){
     ui->runInstructionButton->setEnabled(false);
     ui->textInput->setEnabled(true);
     ui->inputButton->setEnabled(true);
+    ui->textInput->setFocus();
 }
 
 
@@ -303,7 +306,7 @@ void MainWindow::on_unPauseButton_clicked()
 
 
 
-void MainWindow::on_resetButton_clicked()
+void MainWindow::on_resetButton_clicked() // resets the current working file
 {
     std::cout << "resetting" << std::endl;
     for(int i = 0; i < mainMemory.getMemoryList().size(); i++){
@@ -312,6 +315,10 @@ void MainWindow::on_resetButton_clicked()
     mainMemory.setMemoryLocation(0);
     mainMemory.setAccumulator(0);
     ui->accumulatorInt->setText("0"); //Displays accumulator as 0 on reset
+    for(int i = 0; i < mainMemory.getMemoryList().size();i++){
+        mainMemory.setValueAt(i,0);
+    }
+
     createLists();
 }
 
@@ -392,7 +399,7 @@ void MainWindow::on_customizeColor_clicked()
     toggleColor();
 
 }
-void MainWindow::toggleColor(){
+void MainWindow::toggleColor(){ // toggles the color customization. If they're hidden it shows them if they're shown it's hidden
     ui->colorErrorText->hide();
     if(ui->redPrimary->isHidden()){
         ui->redPrimary->show();
@@ -475,21 +482,21 @@ void MainWindow::paste(){
     //clip board copy/paste testing to help josh
     QString temp = QApplication::clipboard()->text(); // grabs the text from the clipboard (what ever is copied on your computer)
     QStringList lines = temp.split("\n", Qt::SkipEmptyParts); // creates a list from the clipboard each list element is what was seperated by a new line
-    stringstream temp2; // a string you can put the lines into for testing
+   /*stringstream temp2; // a string you can put the lines into for testing
     for(int i = 0; i < lines.size(); i++){   // a for loop that goes through each element in the list
         temp2 << lines[i].toStdString() << "\n"; // puts the element into the test string above and adds a new line after converting it to standard string
         std::cout << lines[i].toStdString() << endl; // outputs the element [i] to the clipboard as a standard string instead of QString
     }
     temp2 << "hello hello" << endl; // added to test setting to clip board
     QApplication::clipboard()->setText(QString::fromStdString(temp2.str())); // this will set the clipboard with the text you want to have copied in this case original + hello hello
-
+    */
 
     int rowNumber = 0;
     auto rowList = ui->instructionTable->selectionModel()->selectedRows();
     if(rowList.count() > 0){
         rowNumber = rowList.constFirst().row();
     }
-    std::cout << "paste pressed" << std::endl;
+    //std::cout << "paste pressed" << std::endl;
     for(int i = 0; i < lines.size(); i++){
            ui->instructionTable->setItem(i,rowNumber,new QTableWidgetItem(lines[i])); // the int sets where the paste starts.  Change it to where the user has selected.
         }
@@ -497,16 +504,23 @@ void MainWindow::paste(){
 
 
 void MainWindow::copy(){
-    std::cout << "copied pressed" << std::endl;
+    std::stringstream text;
+    for(int i =0; i < this->mainMemory.getMemoryList().size(); i++){
+        QTableWidgetItem *temp = ui->instructionTable->item(i,0);
+        if(temp->isSelected()){
+            text << temp->text().toStdString() << std::endl;
+        }
+    }
+    QApplication::clipboard()->setText(QString::fromStdString(text.str()));
 }
 
 
 
-void MainWindow::on_file1Button_clicked()
+void MainWindow::on_file1Button_clicked() // disables file1, enables button for whichever was active before and saves to it's respective classes, then loads file1 to the gui table.
 {
     ui->file1Button->setEnabled(false);
     ui->file1ButtonBorder->setHidden(false);
-    if(ui->file2Button->isEnabled() == false){    // if button two isn't enabled it enables it
+    if(ui->file2Button->isEnabled() == false){
         ui->file2Button->setEnabled(true);
         ui->file2ButtonBorder->setHidden(true);
         saveToClass(&this->instructionsFile2, &this->mainMemoryFile2);
@@ -521,11 +535,11 @@ void MainWindow::on_file1Button_clicked()
 }
 
 
-void MainWindow::on_file2Button_clicked()
+void MainWindow::on_file2Button_clicked() // disables file2, enables button for whichever was active before and saves to it's respective classes, then loads file2 to the gui table.
 {
     ui->file2Button->setEnabled(false);
     ui->file2ButtonBorder->setHidden(false);
-    if(ui->file1Button->isEnabled() == false){    // if button two isn't enabled it enables it
+    if(ui->file1Button->isEnabled() == false){
         ui->file1Button->setEnabled(true);
         ui->file1ButtonBorder->setHidden(true);
         saveToClass(&this->instructionsFile1, &this->mainMemoryFile1);
@@ -540,11 +554,11 @@ void MainWindow::on_file2Button_clicked()
 }
 
 
-void MainWindow::on_file3Button_clicked()
+void MainWindow::on_file3Button_clicked() // disables file3 button, enables button for whichever was active before and saves to it's respective classes, then loads file3 to the gui table.
 {
     ui->file3Button->setEnabled(false);
     ui->file3ButtonBorder->setHidden(false);
-    if(ui->file2Button->isEnabled() == false){    // if button two isn't enabled it enables it
+    if(ui->file2Button->isEnabled() == false){
         ui->file2Button->setEnabled(true);
         ui->file2ButtonBorder->setHidden(true);
         saveToClass(&this->instructionsFile2, &this->mainMemoryFile2);
@@ -558,14 +572,14 @@ void MainWindow::on_file3Button_clicked()
     setMemoryAndInstructions(&instructionsFile3,&mainMemoryFile3);
 }
 
-void MainWindow::setMemoryAndInstructions(Instructions* instruct,MainMemory* memory){
+void MainWindow::setMemoryAndInstructions(Instructions* instruct,MainMemory* memory){ // copies the provided memory and instructions class to the gui classes
     if(instruct->fourDigitInput == true){
         this->fourDigitInput = true;
     }
     if(instruct->sixDigitInput == true){
         this->sixDigitInput = true;
     }
-    if(ui->unPauseButton->isEnabled()){
+    if(ui->unPauseButton->isEnabled()){ // if the program is paused it becomes unpaused
         ui->haltedText->hide();
         ui->unPauseButton->setEnabled(false);
         ui->runAllInstructionButtons->setEnabled(true);
@@ -578,31 +592,33 @@ void MainWindow::setMemoryAndInstructions(Instructions* instruct,MainMemory* mem
         QTableWidgetItem *temp2 = ui->memoryTable->item(i,0);
         temp->setText(instruct->getFullInstructionTable().at(i));
         temp2->setText(QString::number(memory->getValueAt(i)));
-        if(i > this->mainMemory.getMemoryLocation()){
+        if(i > this->mainMemory.getMemoryLocation()){ // resets the colors to the correct colors for the current file
             temp->setBackground(QColorConstants::White);
         }else if(i < this->mainMemory.getMemoryLocation()){
-            if(temp->text().length() == 5 && this->sixDigitInput == true){
+            if(temp->text().length() == 5 && this->fourDigitInput == true){
                 temp->setBackground(QColor::fromRgb(3,223,252));
             }
             else if(temp->text().length() == 7 && this->sixDigitInput == true){
                 temp->setBackground(QColor::fromRgb(3,223,252));
             }
+            else if(temp->text().length() == 0){
+                    temp->setBackground(QColor::fromRgb(255, 0, 0));
+            }
             else{
-                temp->setBackground(QColor::fromRgb(154, 154, 154));
+                temp->setBackground(QColor::fromRgb(255, 0, 0));
             }
         }
-
+        if(temp->text().length() !=0){ // selects the last row that had an input.
+            this->ui->instructionTable->selectRow(i);
+        }
 
     }
-    if(this->mainMemory.getMemoryLocation() > 0){
-        this->ui->instructionTable->selectRow(this->mainMemory.getMemoryLocation()-1);
-    }else{
+    if(this->mainMemory.getMemoryLocation() == 0){ // if there aren't any inputs it selects the first row.
         this->ui->instructionTable->selectRow(this->mainMemory.getMemoryLocation());
     }
 
-
 }
-void MainWindow::saveToClass(Instructions *instruct,MainMemory *memory){
+void MainWindow::saveToClass(Instructions *instruct,MainMemory *memory){ // copies the current gui classes to the provided instrucion and memory files.
     if(this->fourDigitInput == true){
         instruct->fourDigitInput = true;
     }
@@ -616,7 +632,7 @@ void MainWindow::saveToClass(Instructions *instruct,MainMemory *memory){
     }
 
 }
-void MainWindow::disableFileButtons(){
+void MainWindow::disableFileButtons(){ // disables all file buttons.
     if(ui->file1ButtonBorder->isHidden()){
             ui->file1Button->setEnabled(false);
     }
@@ -629,7 +645,7 @@ void MainWindow::disableFileButtons(){
     }
 }
 
-void MainWindow::enableFileButtons(){
+void MainWindow::enableFileButtons(){ // enables all file buttons except the one that is currently selected.
     if(ui->file1ButtonBorder->isHidden()){
             ui->file1Button->setEnabled(true);
     }
@@ -641,7 +657,7 @@ void MainWindow::enableFileButtons(){
     }
 }
 
-void MainWindow::on_defaultColors_clicked()
+void MainWindow::on_defaultColors_clicked() // resets the color customization to default.
 {
 
     ui->centralwidget->setStyleSheet("background-color: rgb(76, 114, 29);");
@@ -659,7 +675,7 @@ void MainWindow::on_defaultColors_clicked()
     ui->file3Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
     ui->defaultColors->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
     toggleColor();
-
+    ui->customizeColor->show();
 
 
 }
