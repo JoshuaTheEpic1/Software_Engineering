@@ -62,7 +62,9 @@ void DIVIDE(MainMemory* mainMemory, int instructMemLoc) {
 }
 
 void MULTIPLY(MainMemory* mainMemory, int instructMemLoc) {
-    mainMemory->setAccumulator(mainMemory->getAccumulator() * mainMemory->getValueAt(instructMemLoc));
+    int product = mainMemory->getAccumulator() * mainMemory->getValueAt(instructMemLoc);
+    if(product > 999999) product -= 999999;
+    mainMemory->setAccumulator(product);
 }
 
 
