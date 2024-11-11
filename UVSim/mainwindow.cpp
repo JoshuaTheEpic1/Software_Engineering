@@ -357,7 +357,7 @@ void MainWindow::on_loadButton_clicked()
                 QString number = line.mid(1);
                 
                 // Create the new 6-digit format
-                line = sign + number.left(2) + "00" + number; // e.g., +1000 -> +100000, -2999 -> -290099
+                line = sign + "0" + number.left(2) + "0" + number.mid(2); // e.g., +1010 -> +010010, -2999 -> -029099
             }
             ui->instructionTable->setItem(row, 0, new QTableWidgetItem(line));
             row++;
