@@ -342,14 +342,23 @@ void MainWindow::on_loadButton_clicked()
     QString line;
     int row = 0;
 
-    // Read the file line by line
+   // Read the file line by line
     while (!in.atEnd() && row < this->mainMemory.getMemoryList().size()) {
         line = in.readLine();
         
-        // Validate the instruction format, automatically skipping invalidly formatted instructions
-        QRegularExpression regex("^[+-]\\d{4}$");
+        // Validate the instruction format for both 4-digit and 6-digit numbers
+        QRegularExpression regex("^[+-]\\d{4,6}$");
         QRegularExpressionMatch match = regex.match(line);
         if (match.hasMatch()) {
+            // Convert 4-digit words to 6-digit format
+            if (line.length() == 5) {
+                // Extract the sign and the number
+                QString sign = line.left(1);
+                QString number = line.mid(1);
+                
+                // Create the new 6-digit format
+                line = sign + number.left(2) + "00" + number; // e.g., +1000 -> +100000, -2999 -> -290099
+            }
             ui->instructionTable->setItem(row, 0, new QTableWidgetItem(line));
             row++;
         }
@@ -357,7 +366,6 @@ void MainWindow::on_loadButton_clicked()
 
     file.close();
 }
-
 void MainWindow::on_saveButton_clicked()
 {
     // Open file dialog to select a location to save the text file
