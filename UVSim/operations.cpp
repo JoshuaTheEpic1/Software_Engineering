@@ -63,11 +63,11 @@ void DIVIDE(MainMemory* mainMemory, int instructMemLoc) {
 
 void MULTIPLY(MainMemory* mainMemory, int instructMemLoc) {
     int product = mainMemory->getAccumulator() * mainMemory->getValueAt(instructMemLoc);
-    if(product > 999999 || product < -999999) product = OVERFLOW(product);
+    if(product > 999999 || product < -999999) product = Overflow(product);
     mainMemory->setAccumulator(product);
 }
 
-int OVERFLOW(int value) {
+int Overflow(int value) {
     int reducer = -1999999;
     if (value < -999999) reducer *= -1;
     while(value > 999999 || value < -999999)

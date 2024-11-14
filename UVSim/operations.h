@@ -16,6 +16,7 @@ void READ(int instructMemLoc,  MainMemory* mainMemory, int value);
 int WRITE(int instructMemLoc,  MainMemory* mainMemory);
 void DIVIDE(MainMemory* mainMemory, int instructMemLoc);
 void MULTIPLY(MainMemory* mainMemory, int instructMemLoc);
+int Overflow(int value);
 
 #endif
 
