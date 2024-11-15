@@ -41,10 +41,6 @@ const bool UNITTESTINGBOOL = false;
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    w.createLists();
     if(UNITTESTINGBOOL){
         cout << endl;
         cout << endl;
@@ -53,7 +49,13 @@ int main(int argc, char *argv[])
         cout << endl;
         cout << "Unit Testing Results: " << endl;
         UNITTESTING();
+        return 0;
     }
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    w.createLists();
+
     /*if(!(UNITTESTINGBOOL)) { // old code used for prototype
         vector<int> mainMemory;
         vector<string> instructions;
