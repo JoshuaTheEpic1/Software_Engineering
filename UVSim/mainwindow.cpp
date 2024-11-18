@@ -404,7 +404,7 @@ void MainWindow::on_loadButton_clicked() {
                 QString number = line.mid(1);
 
                 // Create the new 6-digit format
-                line = sign + "0" + number.left(2) + "0" + number.mid(2; // e.g., +1010 -> +010010, -2999 -> -029099
+                line = sign + "0" + number.left(2) + "0" + number.mid(2); // e.g., +1010 -> +010010, -2999 -> -029099
             }
             ui->instructionTable->setItem(row, 0, new QTableWidgetItem(line)); // Set the instruction in the table
             row++; // Move to the next row
@@ -531,11 +531,11 @@ void MainWindow::on_confirmColor_clicked() {
             ui->resetButton->setStyleSheet(QString::fromStdString(s.str())); // Apply style to reset button
             ui->unPauseButton->setStyleSheet(QString::fromStdString(s.str())); // Apply style to unpause
             ui->runAllInstructionButtons->setStyleSheet(QString::fromStdString(s.str())); // Style for run all instructions button
-ui->runInstructionButton->setStyleSheet(QString::fromStdString(s.str())); // Style for run instruction button
-ui->file1Button->setStyleSheet(QString::fromStdString(s.str())); // Style for file 1 button
-ui->file2Button->setStyleSheet(QString::fromStdString(s.str())); // Style for file 2 button
-ui->file3Button->setStyleSheet(QString::fromStdString(s.str())); // Style for file 3 button
-ui->defaultColors->setStyleSheet(QString::fromStdString(s.str())); // Style for default colors button
+            ui->runInstructionButton->setStyleSheet(QString::fromStdString(s.str())); // Style for run instruction button
+            ui->file1Button->setStyleSheet(QString::fromStdString(s.str())); // Style for file 1 button
+            ui->file2Button->setStyleSheet(QString::fromStdString(s.str())); // Style for file 2 button
+            ui->file3Button->setStyleSheet(QString::fromStdString(s.str())); // Style for file 3 button
+            ui->defaultColors->setStyleSheet(QString::fromStdString(s.str())); // Style for default colors button
 }
 
 // Function to handle pasting text from the clipboard into the instruction table
@@ -748,18 +748,18 @@ void MainWindow::on_defaultColors_clicked() {
     // Reset styles to default colors
     ui->centralwidget->setStyleSheet("background-color: rgb(76, 114, 29);");
     ui->confirmColor->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
-    ui->customizeColor->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
-    ui->inputButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
-    ui->loadButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
-    ui->saveButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
-    ui->resetButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
-    ui->unPauseButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
-    ui->runAllInstructionButtons->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
-    ui->runInstructionButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
-    ui->file1Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
-    ui->file2Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
-    ui->file3Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
-    ui->defaultColors->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
+    ui->customizeColor->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->inputButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->loadButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->saveButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->resetButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->unPauseButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->runAllInstructionButtons->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->runInstructionButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->file1Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->file2Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->file3Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->defaultColors->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
     
     toggleColor(); // Toggle color customization visibility
     ui->customizeColor->show(); // Show the customize color button
