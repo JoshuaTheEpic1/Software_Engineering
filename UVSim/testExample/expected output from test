@@ -1,7 +1,21 @@
-inputs are 
-1
+inputs are 1
 2
 3
 4
 2
 4
+
+What the different locations should be after running the example files with example inputs.
+
+1:  1
+2:  2
+3:  3
+4:  4
+5:  2
+6:  4
+
+10: 3 The addition of 1 + 2
+11: 6 The addition of 3 + 3
+12: 2 The subtraction of 6 - 4
+13: 1 The division of 2 / 2
+14: 4 The multiplication of 1 * 4
