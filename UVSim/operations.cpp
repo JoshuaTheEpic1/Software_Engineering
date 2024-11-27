@@ -41,6 +41,7 @@ void READ(int instructMemLoc, MainMemory* mainMemory, int value) {
         mainMemory->setValueAt(instructMemLoc, value); // Set the value at the specified memory location
     } else {
         std::cout << "error: memory location out of bounds.\n"; // Error message for out-of-bounds access
+        throw runtime_error("Memory location out of bounds.");
     }
 }
 
@@ -52,6 +53,7 @@ int WRITE(int instructMemLoc, MainMemory* mainMemory) {
         return mainMemory->getValueAt(instructMemLoc); // Return the value at the specified memory location
     } else {
         std::cout << "error: memory location out of bounds.\n"; // Error message for out-of-bounds access
+        throw runtime_error("Memory location out of bounds.");
     }
     return -1; // Return -1 to indicate an error
 }
@@ -61,6 +63,7 @@ void DIVIDE(MainMemory* mainMemory, int instructMemLoc) {
     int divisor = mainMemory->getValueAt(instructMemLoc); // Get the divisor from memory
     if (divisor == 0) {
         std::cout << "Divide by zero error" << std::endl; // Error message for division by zero
+        throw runtime_error("Math error: Attempted to divide by Zero\n");
     } else {
         mainMemory->setAccumulator(mainMemory->getAccumulator() / divisor); // Perform division and update the accumulator
     }

@@ -62,13 +62,13 @@ void MainWindow::createLists(){
         if(i < 10){
             temp << "00" << i; // Format single-digit indices with leading zeros
         }
-        else if{i < 100){
+        else if(i < 100){
             temp << "0" << i; // Format double-digit indices with leading zero
         }
         else {
             temp << i; // Format triple-digit indices
         }
-        }
+
         ui->memoryTable->setVerticalHeaderItem(i, new QTableWidgetItem(QString::fromStdString(temp.str()))); // Set vertical header item
         ui->memoryTable->setItem(i,0,new QTableWidgetItem("0")); // Initialize memory table with zeros
         ui->instructionTable->setItem(i,0,new QTableWidgetItem("")); // Initialize instruction table with empty strings
@@ -536,6 +536,8 @@ void MainWindow::on_confirmColor_clicked() {
             ui->file2Button->setStyleSheet(QString::fromStdString(s.str())); // Style for file 2 button
             ui->file3Button->setStyleSheet(QString::fromStdString(s.str())); // Style for file 3 button
             ui->defaultColors->setStyleSheet(QString::fromStdString(s.str())); // Style for default colors button
+        }
+    }
 }
 
 // Function to handle pasting text from the clipboard into the instruction table
