@@ -1,9 +1,9 @@
 
-#Table of Contents
+Table of Contents
 =================
 * [Summary](#summary)<br>
 * [BasicML Explained](#welcome-to-basicml)<br>
-* [Example Operations](#example-operations)<br>
+* [Example Operations](#examples-of-operations)<br>
 * [Using The GUI](#using-the-gui) <br>
 * [Getting Started](#getting-started)<br>
 
@@ -40,7 +40,7 @@ Accumulator: There is an accumulator with a value that begins at 0 and holds the
 
 Word: this is a line of BasicML code.  it consists of an operation, and a memory location, such as 30 (Add) and 43 (memory location 43) or a number up to 4 decimal places, positive or negative.
 
-## Example Operations 
+## Examples of Operations 
 ### Read/Write Operations
 
 READ = 10 Read an input from the keyboard into the location defined by the second pair of numbers.
