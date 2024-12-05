@@ -298,13 +298,18 @@ void divideTests() {
     }
 
     // Test divide by zero
-    DIVIDE(&UnitTestingMemory, 3); // Attempt to divide by zero
-    if (UnitTestingMemory.getAccumulator() == 5) {
-        std::cout << "Divide by zero test: Passed" << std::endl; // Test passed
-    } else {
-        std::cout << "Divide by zero test: Failed" << std::endl; // Test failed
-        unitTestPassed = false; // Mark test as failed
+    try {
+        DIVIDE(&UnitTestingMemory, 3); // Attempt to divide by zero
+    } catch (...) {
+        if (UnitTestingMemory.getAccumulator() == 5) {
+            std::cout << "Divide by zero test: Passed" << std::endl; // Test passed
+        } else {
+            std::cout << "Divide by zero test: Failed" << std::endl; // Test failed
+            unitTestPassed = false; // Mark test as failed
+        }
     }
+
+
 }
 
 // Function to test the multiplication operation

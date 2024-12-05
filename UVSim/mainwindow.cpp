@@ -94,7 +94,7 @@ void MainWindow::on_runInstructionButton_clicked() {
         QTableWidgetItem *temp = ui->instructionTable->item(this->mainMemory.getMemoryLocation(),0); // Get current instruction item
 
         // Validate instruction format
-        if(temp->text().length() >= 5 && (temp->text().at(0) == QString::fromStdString("+") || temp->text().at(0) == QString::fromStdString("-"))){ 
+        if((temp->text().length() == 5 || temp->text().length() == 7) && (temp->text().at(0) == QString::fromStdString("+") || temp->text().at(0) == QString::fromStdString("-"))){
             // Check for four or six digit input
             if(this->fourDigitInput == false && this->sixDigitInput == false){
                 if(temp->text().length() == 5){
@@ -124,8 +124,6 @@ void MainWindow::on_runInstructionButton_clicked() {
                         memoryLocationText << qTemp.toStdString(); // Build memory location text
                     }
                 }
-            } else {
-            this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation()+1); // Move to next memory location
             }
             
             try{
@@ -223,12 +221,15 @@ void MainWindow::on_runAllInstructionButtons_clicked()
         QTableWidgetItem *temp = ui->instructionTable->item(i,0); // Get current instruction item
 
         // Stop execution if the instruction cell is empty
-        if(temp->text().length() == 0){ 
+        if(temp->text().isEmpty()){
+            ui->runAllInstructionButtons->setEnabled(true);
+            ui->runInstructionButton->setEnabled(true);
+
             break;
         }
 
         // Validate instruction format
-        if(temp->text().length() >= 5 && (temp->text().at(0) == QString::fromStdString("+") || temp->text().at(0) == QString::fromStdString("-"))){ // very simple validation.
+        if((temp->text().length() == 5 || temp->text().length() == 7) && (temp->text().at(0) == QString::fromStdString("+") || temp->text().at(0) == QString::fromStdString("-"))){ // very simple validation.
             // Check for four or six digit input
             if(this->fourDigitInput == false && this->sixDigitInput == false){
                 if(temp->text().length() == 5){
@@ -259,8 +260,6 @@ void MainWindow::on_runAllInstructionButtons_clicked()
                         memoryLocationText << qTemp.toStdString(); // Build memory location text
                     }
                 }
-            } else {
-                this->mainMemory.setMemoryLocation(this->mainMemory.getMemoryLocation()+1); // Move to next memory location
             }
             try{
                 // Convert instruction and memory location text to integers
@@ -666,7 +665,7 @@ void MainWindow::setMemoryAndInstructions(Instructions* instruct, MainMemory* me
         temp2->setText(QString::number(memory->getValueAt(i))); // Set memory value
 
         // Reset colors based on the current memory location
-        if (i > this->mainMemory.getMemoryLocation()) {
+        if (i >= this->mainMemory.getMemoryLocation()) {
             temp->setBackground(QColorConstants::White); // Reset background to white for future instructions
         } else if (i < this->mainMemory.getMemoryLocation()) {
             // Set background color based on input type and validity
@@ -681,15 +680,14 @@ void MainWindow::setMemoryAndInstructions(Instructions* instruct, MainMemory* me
             }
         }
 
-        // Select the last row that had an input
-        if (temp->text().length() != 0) {
-            this->ui->instructionTable->selectRow(i);
-        }
+
     }
 
-    // If there are no inputs, select the first row
+    // selects the last row ran.
     if (this->mainMemory.getMemoryLocation() == 0) {
         this->ui->instructionTable->selectRow(this->mainMemory.getMemoryLocation());
+    }else{
+        this->ui->instructionTable->selectRow(this->mainMemory.getMemoryLocation()-1);
     }
 }
 
@@ -750,18 +748,24 @@ void MainWindow::on_defaultColors_clicked() {
     // Reset styles to default colors
     ui->centralwidget->setStyleSheet("background-color: rgb(76, 114, 29);");
     ui->confirmColor->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
-    ui->customizeColor->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
-    ui->inputButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
-    ui->loadButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
-    ui->saveButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
-    ui->resetButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
-    ui->unPauseButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
-    ui->runAllInstructionButtons->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
-    ui->runInstructionButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
-    ui->file1Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
-    ui->file2Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
-    ui->file3Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
-    ui->defaultColors->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0)/;");
+    ui->customizeColor->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
+    ui->inputButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
+    ui->loadButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
+    ui->saveButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
+    ui->resetButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
+    ui->unPauseButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
+    ui->runAllInstructionButtons->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
+    ui->runInstructionButton->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
+    ui->file1Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
+    ui->file2Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
+    ui->file3Button->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
+    ui->defaultColors->setStyleSheet("background-color: rgb(255,255,255);\n color: rgb(0, 0, 0);");
+    ui->redPrimary->setText("76");
+    ui->redSecondary->setText("255");
+    ui->greenPrimary->setText("114");
+    ui->greenSecondary->setText("255");
+    ui->bluePrimary->setText("29");
+    ui->blueSecondary->setText("255");
     
     toggleColor(); // Toggle color customization visibility
     ui->customizeColor->show(); // Show the customize color button

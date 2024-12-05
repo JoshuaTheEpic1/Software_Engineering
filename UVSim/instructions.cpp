@@ -5,7 +5,7 @@
 Instructions::Instructions() {
     this->fullInstructionTable.resize(250);
     for(int i = 0; i<this->fullInstructionTable.size(); i++){
-        this->fullInstructionTable.at(i) = " ";
+        this->fullInstructionTable.at(i) = "";
     }
 }
 
