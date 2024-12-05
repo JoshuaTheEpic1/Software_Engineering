@@ -1,16 +1,21 @@
 
 Table of Contents
 =================
+* [Summary](#summary)<br>
 * [BasicML Explained](#welcome-to-basicml)<br>
+* [Example Operations](#example-operations)<br>
 * [Using The GUI](#using-the-gui) <br>
-* [Building](#building)<br>
+* [Getting Started](#getting-started)<br>
+
+## Summary
+UVSim is a basic virtual machine designed to aid students in the learning of machine language and computer architecture. Working off of the language BasicML, the program utilizes its accumulator, main memory, and register to perform various instructions.
 
 ## Welcome to BasicML.
-This program requires a C++ to run.
-
 To program in BasicML, you will need to select an operation and a memory location.
 
 <pre>
+For 4 Digit Words:
+ 
 Operation: The first two numbers will select what operation you would like to perform.
  |         A complete list of operations will be given later.
 \|/
@@ -19,11 +24,23 @@ XX  YY
      |
     Memory Location:  The last two numbers will select the memory location you want to access.
 </pre>
+<pre>
+For 6 Digit Words:
+ 
+Operation: The latter two of the first three numbers will select what operation you would like to perform.
+ |         A complete list of operations will be given later.
+\|/
+XXX  YYY
+    /|\
+     |
+    Memory Location:  The last three numbers will select the memory location you want to access.
+</pre>
 
-Accumulator: There is an accumulator value that begins at 0 and holds the results of math operations.  
+Accumulator: There is an accumulator with a value that begins at 0 and holds the results of math operations.  
 
 Word: this is a line of BasicML code.  it consists of an operation, and a memory location, such as 30 (Add) and 43 (memory location 43) or a number up to 4 decimal places, positive or negative.
 
+## Example Operations
 ===== OPERATIONS WITH EXAMPLES BELOW  =====
 
 READ = 10 Read an input from the keyboard into the location defined by the second pair of numbers.
@@ -67,8 +84,11 @@ BRANCH = 4087 runs the word at location 87
 BRANCHNEG = 4192 Branch to memory location 92 if the accumulator is negative.
 BRANCHZERO = 4252 Branch to memory location 52 if the accumulator is zero.
 HALT = 43XX Pauses the program.  The memory location does not change anything.
+
 ## Using the GUI
 <img src="https://i.imgur.com/rg4QV5v.png" width="800" height="632"/><br>
-## Building
+
+## Getting Started
+This program requires C++ to run.<br>
 You can download the most recent release [here](https://github.com/JoshuaTheEpic1/Software_Engineering/releases).<br> 
-You can build UVSim using the Qt program, which you can grab [here](https://www.qt.io/download-dev).
+You can alternatively build UVSim using the Qt program, which you can grab [here](https://www.qt.io/download-dev).
