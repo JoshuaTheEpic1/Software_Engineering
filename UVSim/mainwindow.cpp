@@ -359,16 +359,23 @@ void MainWindow::on_resetButton_clicked() {
     mainMemory.setAccumulator(0); // Reset accumulator to 0
     ui->accumulatorInt->setText("0"); // Display accumulator as 0 on reset
 
-    // Ensure all memory values are set to 0 again (redundant)
-    for (int i = 0; i < mainMemory.getMemoryList().size(); i++) {
-        mainMemory.setValueAt(i, 0); // Set each memory location to 0
-    }
-
     createLists(); // Recreate the lists in the UI
 }
 
 // Slot function for handling the load button click
 void MainWindow::on_loadButton_clicked() {
+    // Reset all memory values to 0
+    for (int i = 0; i < mainMemory.getMemoryList().size(); i++) {
+        mainMemory.setValueAt(0, i); // Set each memory location to 0
+    }
+
+    // Reset memory location and accumulator
+    mainMemory.setMemoryLocation(0); // Reset memory location to the start
+    mainMemory.setAccumulator(0); // Reset accumulator to 0
+    ui->accumulatorInt->setText("0"); // Display accumulator as 0 on reset
+
+    createLists(); // Recreate the lists in the UI
+
     // Open file dialog to select a text file
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Instruction File"), "", tr("Text Files (*.txt)"));
 
