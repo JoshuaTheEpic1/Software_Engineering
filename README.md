@@ -1,5 +1,5 @@
 
-Table of Contents
+#Table of Contents
 =================
 * [Summary](#summary)<br>
 * [BasicML Explained](#welcome-to-basicml)<br>
@@ -40,8 +40,8 @@ Accumulator: There is an accumulator with a value that begins at 0 and holds the
 
 Word: this is a line of BasicML code.  it consists of an operation, and a memory location, such as 30 (Add) and 43 (memory location 43) or a number up to 4 decimal places, positive or negative.
 
-## Example Operations
-===== OPERATIONS WITH EXAMPLES BELOW  =====
+## Example Operations 
+### Read/Write Operations
 
 READ = 10 Read an input from the keyboard into the location defined by the second pair of numbers.
 
@@ -53,7 +53,8 @@ READ 1015:  The user enters a value on their keyboard, which is saved in locatio
 WRITE 1120: The program displays the value stored at location 20.
 
 
-Load/store operations:<br>
+### Load/Store Operations:
+
 LOAD = 20 Load a word from the location defined by the second pair of numbers in memory into the accumulator.
 
 STORE = 21 Store a word from the accumulator into the location defined by the second pair of numbers in memory.
@@ -63,7 +64,7 @@ LOAD 2015:  The program takes a word at line 15 and places it in the accumulator
 
 STORE 1120: The program stores the word currently in its accumulator and places it in memory location 20.
 
-Arithmetic operation:<br>
+### Arithmetic Operations
 ADD = 30 Add a word from  the location defined by the second pair of numbers in memory to the word in the accumulator (leave the result in the accumulator)
 
 SUBTRACT = 31 Subtract a word from the location defined by the second pair of numbers in memory from the word in the accumulator (leave the result in the accumulator)
@@ -85,7 +86,7 @@ MULTIPLY = 3345 multiplies the value in the accumulator with the value at 45.
 
 To store the results of an operation, run the STORE operation 21XX to save it to location XX 
 
-Control operation:<br>
+### Control Operations
 BRANCH = 40 runs the word at a location defined by the second pair of numbers in memory
 
 BRANCHNEG = 41 Branch to the location defined by the second pair of numbers in memory if the accumulator is negative.
