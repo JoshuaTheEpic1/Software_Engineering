@@ -1,14 +1,14 @@
 
+## Summary
+UVSim is a basic virtual machine designed to aid students in the learning of machine language and computer architecture. Working off of the language BasicML, the program utilizes its accumulator, main memory, and register to perform various instructions.
+
 Table of Contents
 =================
-* [Summary](#summary)<br>
 * [BasicML Explained](#welcome-to-basicml)<br>
 * [Example Operations](#examples-of-operations)<br>
 * [Using The GUI](#using-the-gui) <br>
 * [Getting Started](#getting-started)<br>
 
-## Summary
-UVSim is a basic virtual machine designed to aid students in the learning of machine language and computer architecture. Working off of the language BasicML, the program utilizes its accumulator, main memory, and register to perform various instructions.
 
 ## Welcome to BasicML.
 To program in BasicML, you will need to select an operation and a memory location.
