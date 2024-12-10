@@ -7,7 +7,7 @@ Table of Contents
 * [BasicML Explained](#welcome-to-basicml)<br>
 * [Example Operations](#examples-of-operations)<br>
 * [Using The GUI](#using-the-gui) <br>
-* [Install Instructions](#install)<br>
+* [Install Instructions](#install-instructions)<br>
 
 
 ## Welcome to BasicML.
