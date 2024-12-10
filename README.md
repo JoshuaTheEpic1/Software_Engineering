@@ -7,7 +7,7 @@ Table of Contents
 * [BasicML Explained](#welcome-to-basicml)<br>
 * [Example Operations](#examples-of-operations)<br>
 * [Using The GUI](#using-the-gui) <br>
-* [Getting Started](#getting-started)<br>
+* [Install Instructions](#install)<br>
 
 
 ## Welcome to BasicML.
@@ -108,7 +108,7 @@ HALT = 43XX Pauses the program.  The memory location does not change anything.
 ## Using the GUI
 <img src="https://i.imgur.com/rg4QV5v.png" width="800" height="632"/><br>
 
-## Getting Started
+## Install Instructions
 This program requires C++ to run.<br>
 You can download the most recent release [here](https://github.com/JoshuaTheEpic1/Software_Engineering/releases).<br> 
 You can alternatively build UVSim using the Qt program, which you can grab [here](https://www.qt.io/download-dev).
